@@ -15,9 +15,16 @@ document.getElementById("topic").addEventListener("input", () => {
  * @function work
  */
 async function work() {
-    const topic = document.getElementById("topic").value;
-    const publications = [];
+    const topic = document.getElementById("topic").value.trim();
     const publicationContainer = document.getElementById('publications');
+
+    // Check if the topic has at least 2 characters
+    if (topic.length < 2) {
+        publicationContainer.innerHTML = "<p>Please enter at least 2 characters to search.</p>";
+        return;
+    }
+
+    const publications = [];
 
     // Clear the previous results
     publicationContainer.innerHTML = "<h2>Loading...</h2>";
@@ -42,6 +49,7 @@ async function work() {
         publicationContainer.innerHTML = `<p>Error fetching publications: ${error.message}</p>`;
     }
 }
+
 
 /**
  * Fetches publications from OpenLibrary API based on the provided topic.
