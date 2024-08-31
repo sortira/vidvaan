@@ -13,6 +13,9 @@ async function work() {
     await arxiv(topic, publications);
     await openalex(topic, publications);
     await openLibrary(topic, publications);
+
+    // Store publications globally to manage pagination
+    window.publications = publications;
     displayPublications(publications);
 }
 
@@ -176,90 +179,149 @@ async function arxiv(topic, publications) {
 }
 
 /**
- * Displays the list of publications in a table format.
+ * Displays the list of publications in a paginated table format.
  * @function displayPublications
  * @param {Array} publications - The array of publications to display.
+ * @param {number} currentPage - The current page number to display.
+ * @param {number} rowsPerPage - The number of rows to display per page.
  */
-function displayPublications(publications) {
+function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
     const publicationContainer = document.getElementById('publications');
     publicationContainer.innerHTML = "<h2>Search Results</h2>";
 
     if (publications.length === 0) {
         publicationContainer.innerHTML += "<p>No publications found for this topic.</p>";
-    } else {
-        // Create the table and header row
-        const table = document.createElement('table');
-        table.className = 'sortable';
-        table.style.borderCollapse = 'collapse';
+        return;
+    }
 
-        const headerRow = document.createElement('tr');
+    // Calculate the start and end indices for the current page
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    const paginatedPublications = publications.slice(startIndex, endIndex);
 
-        const titleHeader = document.createElement('th');
-        titleHeader.textContent = 'Title';
-        titleHeader.style.border = '1px solid black';
-        titleHeader.style.padding = '8px';
-        titleHeader.style.textAlign = 'left';
+    // Create the table and header row
+    const table = document.createElement('table');
+    table.className = 'sortable';
+    table.style.borderCollapse = 'collapse';
 
-        const yearHeader = document.createElement('th');
-        yearHeader.textContent = 'Year';
-        yearHeader.style.border = '1px solid black';
-        yearHeader.style.padding = '8px';
-        yearHeader.style.textAlign = 'left';
+    const headerRow = document.createElement('tr');
 
-        const authorsHeader = document.createElement('th');
-        authorsHeader.textContent = 'Authors';
-        authorsHeader.style.border = '1px solid black';
-        authorsHeader.style.padding = '8px';
-        authorsHeader.style.textAlign = 'left';
+    const titleHeader = document.createElement('th');
+    titleHeader.textContent = 'Title';
+    titleHeader.style.border = '1px solid black';
+    titleHeader.style.padding = '8px';
+    titleHeader.style.textAlign = 'left';
 
-        const repoHeader = document.createElement('th');
-        repoHeader.textContent = 'Academic Database';
-        repoHeader.style.border = '1px solid black';
-        repoHeader.style.padding = '8px';
-        repoHeader.style.textAlign = 'left';
+    const yearHeader = document.createElement('th');
+    yearHeader.textContent = 'Year';
+    yearHeader.style.border = '1px solid black';
+    yearHeader.style.padding = '8px';
+    yearHeader.style.textAlign = 'left';
 
-        headerRow.appendChild(titleHeader);
-        headerRow.appendChild(yearHeader);
-        headerRow.appendChild(authorsHeader);
-        headerRow.appendChild(repoHeader);
-        table.appendChild(headerRow);
+    const authorsHeader = document.createElement('th');
+    authorsHeader.textContent = 'Authors';
+    authorsHeader.style.border = '1px solid black';
+    authorsHeader.style.padding = '8px';
+    authorsHeader.style.textAlign = 'left';
 
-        // Append rows for each publication
-        publications.forEach(pub => {
-            const row = document.createElement('tr');
+    const repoHeader = document.createElement('th');
+    repoHeader.textContent = 'Academic Database';
+    repoHeader.style.border = '1px solid black';
+    repoHeader.style.padding = '8px';
+    repoHeader.style.textAlign = 'left';
 
-            const titleCell = document.createElement('td');
-            const link = document.createElement('a');
-            link.href = pub.url;
-            link.textContent = pub.title;
-            link.target = '_blank'; // Opens the link in a new tab
-            titleCell.appendChild(link);
-            titleCell.style.border = '1px solid black';
-            titleCell.style.padding = '8px';
+    headerRow.appendChild(titleHeader);
+    headerRow.appendChild(yearHeader);
+    headerRow.appendChild(authorsHeader);
+    headerRow.appendChild(repoHeader);
+    table.appendChild(headerRow);
 
-            const yearCell = document.createElement('td');
-            yearCell.textContent = pub.year;
-            yearCell.style.border = '1px solid black';
-            yearCell.style.padding = '8px';
+    // Append rows for each publication
+    paginatedPublications.forEach(pub => {
+        const row = document.createElement('tr');
 
-            const authorsCell = document.createElement('td');
-            authorsCell.textContent = pub.authors;
-            authorsCell.style.border = '1px solid black';
-            authorsCell.style.padding = '8px';
+        const titleCell = document.createElement('td');
+        const link = document.createElement('a');
+        link.href = pub.url;
+        link.textContent = pub.title;
+        link.target = '_blank'; // Opens the link in a new tab
+        titleCell.appendChild(link);
+        titleCell.style.border = '1px solid black';
+        titleCell.style.padding = '8px';
 
-            const repoCell = document.createElement('td');
-            repoCell.textContent = pub.repo;
-            repoCell.style.border = '1px solid black';
-            repoCell.style.padding = '8px';
+        const yearCell = document.createElement('td');
+        yearCell.textContent = pub.year;
+        yearCell.style.border = '1px solid black';
+        yearCell.style.padding = '8px';
 
-            row.appendChild(titleCell);
-            row.appendChild(yearCell);
-            row.appendChild(authorsCell);
-            row.appendChild(repoCell);
-            table.appendChild(row);
+        const authorsCell = document.createElement('td');
+        authorsCell.textContent = pub.authors;
+        authorsCell.style.border = '1px solid black';
+        authorsCell.style.padding = '8px';
+
+        const repoCell = document.createElement('td');
+        repoCell.textContent = pub.repo;
+        repoCell.style.border = '1px solid black';
+        repoCell.style.padding = '8px';
+
+        row.appendChild(titleCell);
+        row.appendChild(yearCell);
+        row.appendChild(authorsCell);
+        row.appendChild(repoCell);
+        table.appendChild(row);
+    });
+
+    // Append the table to the container
+    publicationContainer.appendChild(table);
+
+    // Add pagination controls on the right side
+    const paginationControls = createPaginationControls(publications.length, rowsPerPage, currentPage);
+    publicationContainer.appendChild(paginationControls);
+}
+
+/**
+ * Creates pagination controls.
+ * @function createPaginationControls
+ * @param {number} totalItems - The total number of items.
+ * @param {number} rowsPerPage - The number of rows per page.
+ * @param {number} currentPage - The current page number.
+ * @returns {HTMLElement} - The pagination controls element.
+ */
+function createPaginationControls(totalItems, rowsPerPage, currentPage) {
+    const totalPages = Math.ceil(totalItems / rowsPerPage);
+    const paginationWrapper = document.createElement('div');
+
+    // Style the pagination wrapper to be on the right side
+    paginationWrapper.style.position = 'fixed';
+    paginationWrapper.style.right = '20px';
+    paginationWrapper.style.top = '50%';
+    paginationWrapper.style.transform = 'translateY(-50%)';
+    paginationWrapper.style.display = 'flex';
+    paginationWrapper.style.flexDirection = 'column';
+    paginationWrapper.style.alignItems = 'center';
+
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.style.marginBottom = '10px';
+        pageButton.style.padding = '10px 15px';
+        pageButton.style.cursor = 'pointer';
+        pageButton.style.borderRadius = '5px';
+        pageButton.style.border = '1px solid #ccc';
+        pageButton.style.backgroundColor = i === currentPage ? '#007bff' : '#f8f9fa';
+        pageButton.style.color = i === currentPage ? '#fff' : '#000';
+
+        if (i === currentPage) {
+            pageButton.disabled = true;
+            pageButton.style.fontWeight = 'bold';
+        }
+
+        pageButton.addEventListener('click', () => {
+            displayPublications(window.publications, i, rowsPerPage);
         });
 
-        // Append the table to the container
-        publicationContainer.appendChild(table);
+        paginationWrapper.appendChild(pageButton);
     }
+
+    return paginationWrapper;
 }
