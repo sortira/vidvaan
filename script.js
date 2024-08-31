@@ -1,3 +1,13 @@
+// Debounce function to limit the frequency of search calls
+let debounceTimeout;
+
+document.getElementById("topic").addEventListener("input", () => {
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => {
+        work();
+    }, 500); // Wait for 500ms before triggering the search
+});
+
 /**
  * Main function that consolidates publications from various sources
  * and displays them.
@@ -6,17 +16,32 @@
  */
 async function work() {
     const topic = document.getElementById("topic").value;
+    if (topic === "") return;
     const publications = [];
+    const publicationContainer = document.getElementById('publications');
 
-    // Fetch from all sources and consolidate the results
-    await dblp(topic, publications);
-    await arxiv(topic, publications);
-    await openalex(topic, publications);
-    await openLibrary(topic, publications);
+    // Clear the previous results
+    publicationContainer.innerHTML = "<h2>Loading...</h2>";
 
-    // Store publications globally to manage pagination
-    window.publications = publications;
-    displayPublications(publications);
+    try {
+        // Fetch from all sources in parallel
+        const fetchFunctions = [dblp(topic), arxiv(topic), openalex(topic), openLibrary(topic)];
+
+        for (let fetchPromise of fetchFunctions) {
+            const results = await fetchPromise;
+            publications.push(...results);
+            // Display partial results
+            displayPublications(publications);
+        }
+
+        // Store publications globally to manage pagination
+        window.publications = publications;
+
+        // Final display with all results
+        displayPublications(publications);
+    } catch (error) {
+        publicationContainer.innerHTML = `<p>Error fetching publications: ${error.message}</p>`;
+    }
 }
 
 /**
@@ -24,12 +49,13 @@ async function work() {
  * @async
  * @function openLibrary
  * @param {string} topic - The search topic.
- * @param {Array} publications - The array to store publication results.
- * @returns {Promise<void>}
+ * @returns {Promise<Array>} - The array of publication results.
  */
-async function openLibrary(topic, publications) {
+async function openLibrary(topic) {
     const encodedTopic = encodeURIComponent(topic);
     const url = `https://openlibrary.org/search.json?q=${encodedTopic}`;
+    const publications = [];
+
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -37,11 +63,8 @@ async function openLibrary(topic, publications) {
         }
 
         const data = await response.json();
-
-        // Make sure 'docs' key exists in the response data
         if (data.docs && Array.isArray(data.docs)) {
             data.docs.forEach(work => {
-                // Check if the necessary fields exist
                 const title = work.title || 'Unknown Title';
                 const year = work.first_publish_year || 'Unknown Year';
                 const authors = work.author_name ? work.author_name.join(', ') : 'Unknown Authors';
@@ -59,6 +82,8 @@ async function openLibrary(topic, publications) {
     } catch (error) {
         console.error('Error fetching publications:', error);
     }
+
+    return publications;
 }
 
 /**
@@ -66,12 +91,12 @@ async function openLibrary(topic, publications) {
  * @async
  * @function openalex
  * @param {string} topic - The search topic.
- * @param {Array} publications - The array to store publication results.
- * @returns {Promise<void>}
+ * @returns {Promise<Array>} - The array of publication results.
  */
-async function openalex(topic, publications) {
+async function openalex(topic) {
     const encodedTopic = encodeURIComponent(topic);
     const url = `https://api.openalex.org/works?filter=title.search:${encodedTopic}`;
+    const publications = [];
 
     try {
         const response = await fetch(url);
@@ -92,6 +117,8 @@ async function openalex(topic, publications) {
     } catch (error) {
         console.error('Error fetching publications:', error);
     }
+
+    return publications;
 }
 
 /**
@@ -99,42 +126,45 @@ async function openalex(topic, publications) {
  * @async
  * @function dblp
  * @param {string} topic - The search topic.
- * @param {Array} publications - The array to store publication results.
- * @returns {Promise<void>}
+ * @returns {Promise<Array>} - The array of publication results.
  */
-async function dblp(topic, publications) {
-    let result = await fetch(encodeURI(`https://dblp.org/search/publ/api?q=${topic}&format=json`), {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-        },
-    })
-        .then(response => response.json());
+async function dblp(topic) {
+    const publications = [];
 
-    const papers = result["result"]["hits"]["hit"]; // an array of papers
+    try {
+        let result = await fetch(encodeURI(`https://dblp.org/search/publ/api?q=${topic}&format=json`), {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            },
+        }).then(response => response.json());
 
-    papers.forEach(paper => {
-        let authors = 'Unknown';
+        const papers = result["result"]["hits"]["hit"]; // an array of papers
 
-        // Check if the authors field exists
-        if (paper.info.authors && paper.info.authors.author) {
-            if (Array.isArray(paper.info.authors.author)) {
-                // If it's an array, map over the array
-                authors = paper.info.authors.author.map(a => a.text).join(', ');
-            } else {
-                // If it's an object, handle it as a single author
-                authors = paper.info.authors.author.text;
+        papers.forEach(paper => {
+            let authors = 'Unknown';
+
+            if (paper.info.authors && paper.info.authors.author) {
+                if (Array.isArray(paper.info.authors.author)) {
+                    authors = paper.info.authors.author.map(a => a.text).join(', ');
+                } else {
+                    authors = paper.info.authors.author.text;
+                }
             }
-        }
 
-        publications.push({
-            title: paper.info.title,
-            year: paper.info.year,
-            authors: authors,
-            url: paper.info.url,
-            repo: 'DBLP'
+            publications.push({
+                title: paper.info.title,
+                year: paper.info.year,
+                authors: authors,
+                url: paper.info.url,
+                repo: 'DBLP'
+            });
         });
-    });
+    } catch (error) {
+        console.error('Error fetching publications:', error);
+    }
+
+    return publications;
 }
 
 /**
@@ -142,12 +172,12 @@ async function dblp(topic, publications) {
  * @async
  * @function arxiv
  * @param {string} topic - The search topic.
- * @param {Array} publications - The array to store publication results.
- * @returns {Promise<void>}
+ * @returns {Promise<Array>} - The array of publication results.
  */
-async function arxiv(topic, publications) {
+async function arxiv(topic) {
     const encodedTopic = encodeURIComponent(topic);
     const url = `http://export.arxiv.org/api/query?search_query=all:${encodedTopic}&start=0&max_results=100`;
+    const publications = [];
 
     try {
         const response = await fetch(url);
@@ -176,6 +206,8 @@ async function arxiv(topic, publications) {
     } catch (error) {
         console.error('Error fetching publications:', error);
     }
+
+    return publications;
 }
 
 /**
@@ -194,12 +226,10 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
         return;
     }
 
-    // Calculate the start and end indices for the current page
     const startIndex = (currentPage - 1) * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
     const paginatedPublications = publications.slice(startIndex, endIndex);
 
-    // Create the table and header row
     const table = document.createElement('table');
     table.className = 'sortable';
     table.style.borderCollapse = 'collapse';
@@ -236,7 +266,6 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
     headerRow.appendChild(repoHeader);
     table.appendChild(headerRow);
 
-    // Append rows for each publication
     paginatedPublications.forEach(pub => {
         const row = document.createElement('tr');
 
@@ -271,57 +300,22 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
         table.appendChild(row);
     });
 
-    // Append the table to the container
     publicationContainer.appendChild(table);
 
-    // Add pagination controls on the right side
-    const paginationControls = createPaginationControls(publications.length, rowsPerPage, currentPage);
-    publicationContainer.appendChild(paginationControls);
-}
+    // Add pagination controls if needed
+    if (publications.length > rowsPerPage) {
+        const paginationControls = document.createElement('div');
+        paginationControls.className = 'pagination-controls';
+        const totalPages = Math.ceil(publications.length / rowsPerPage);
 
-/**
- * Creates pagination controls.
- * @function createPaginationControls
- * @param {number} totalItems - The total number of items.
- * @param {number} rowsPerPage - The number of rows per page.
- * @param {number} currentPage - The current page number.
- * @returns {HTMLElement} - The pagination controls element.
- */
-function createPaginationControls(totalItems, rowsPerPage, currentPage) {
-    const totalPages = Math.ceil(totalItems / rowsPerPage);
-    const paginationWrapper = document.createElement('div');
-
-    // Style the pagination wrapper to be on the right side
-    paginationWrapper.style.position = 'fixed';
-    paginationWrapper.style.right = '20px';
-    paginationWrapper.style.top = '50%';
-    paginationWrapper.style.transform = 'translateY(-50%)';
-    paginationWrapper.style.display = 'flex';
-    paginationWrapper.style.flexDirection = 'column';
-    paginationWrapper.style.alignItems = 'center';
-
-    for (let i = 1; i <= totalPages; i++) {
-        const pageButton = document.createElement('button');
-        pageButton.textContent = i;
-        pageButton.style.marginBottom = '10px';
-        pageButton.style.padding = '10px 15px';
-        pageButton.style.cursor = 'pointer';
-        pageButton.style.borderRadius = '5px';
-        pageButton.style.border = '1px solid #ccc';
-        pageButton.style.backgroundColor = i === currentPage ? '#007bff' : '#f8f9fa';
-        pageButton.style.color = i === currentPage ? '#fff' : '#000';
-
-        if (i === currentPage) {
-            pageButton.disabled = true;
-            pageButton.style.fontWeight = 'bold';
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.textContent = i;
+            pageButton.style.margin = '2px';
+            pageButton.addEventListener('click', () => displayPublications(publications, i, rowsPerPage));
+            paginationControls.appendChild(pageButton);
         }
 
-        pageButton.addEventListener('click', () => {
-            displayPublications(window.publications, i, rowsPerPage);
-        });
-
-        paginationWrapper.appendChild(pageButton);
+        publicationContainer.appendChild(paginationControls);
     }
-
-    return paginationWrapper;
 }
