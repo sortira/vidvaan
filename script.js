@@ -16,7 +16,6 @@ document.getElementById("topic").addEventListener("input", () => {
  */
 async function work() {
     const topic = document.getElementById("topic").value;
-    if (topic === "") return;
     const publications = [];
     const publicationContainer = document.getElementById('publications');
 
@@ -337,10 +336,17 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
 
     publicationContainer.appendChild(table);
 
-    // Add pagination controls if needed
+    // Add vertical pagination controls on the right side
     if (publications.length > rowsPerPage) {
         const paginationControls = document.createElement('div');
         paginationControls.className = 'pagination-controls';
+        paginationControls.style.position = 'fixed';
+        paginationControls.style.right = '10px';
+        paginationControls.style.top = '50%';
+        paginationControls.style.transform = 'translateY(-50%)';
+        paginationControls.style.display = 'flex';
+        paginationControls.style.flexDirection = 'column';
+
         const totalPages = Math.ceil(publications.length / rowsPerPage);
 
         for (let i = 1; i <= totalPages; i++) {
