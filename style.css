@@ -1,0 +1,11 @@
+html {
+    height: 100%;
+    width: 100%;
+}
+
+td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 500px;
+}
