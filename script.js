@@ -1,3 +1,9 @@
+/**
+ * Main function that consolidates publications from various sources
+ * and displays them.
+ * @async
+ * @function work
+ */
 async function work() {
     const topic = document.getElementById("topic").value;
     const publications = [];
@@ -45,6 +51,56 @@ async function openLibrary(topic, publications) {
 }
 
 
+/**
+ * Fetches publications from OpenLibrary API based on the provided topic.
+ * @async
+ * @function openLibrary
+ * @param {string} topic - The search topic.
+ * @param {Array} publications - The array to store publication results.
+ * @returns {Promise<void>}
+ */
+async function openLibrary(topic, publications) {
+    const encodedTopic = encodeURIComponent(topic);
+    const url = `https://openlibrary.org/search.json?q=${encodedTopic}`;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Error fetching data: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        // Make sure 'docs' key exists in the response data
+        if (data.docs && Array.isArray(data.docs)) {
+            data.docs.forEach(work => {
+                // Check if the necessary fields exist
+                const title = work.title || 'Unknown Title';
+                const year = work.first_publish_year || 'Unknown Year';
+                const authors = work.author_name ? work.author_name.join(', ') : 'Unknown Authors';
+                const seed = work.seed && work.seed.length > 0 ? work.seed[0] : 'No Seed Available';
+
+                publications.push({
+                    title: title,
+                    year: year,
+                    authors: authors,
+                    url: `https://openlibrary.org${seed}`,
+                    repo: 'OpenLibrary'
+                });
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching publications:', error);
+    }
+}
+
+/**
+ * Fetches publications from OpenAlex API based on the provided topic.
+ * @async
+ * @function openalex
+ * @param {string} topic - The search topic.
+ * @param {Array} publications - The array to store publication results.
+ * @returns {Promise<void>}
+ */
 async function openalex(topic, publications) {
     const encodedTopic = encodeURIComponent(topic);
     const url = `https://api.openalex.org/works?filter=title.search:${encodedTopic}`;
@@ -70,6 +126,14 @@ async function openalex(topic, publications) {
     }
 }
 
+/**
+ * Fetches publications from DBLP API based on the provided topic.
+ * @async
+ * @function dblp
+ * @param {string} topic - The search topic.
+ * @param {Array} publications - The array to store publication results.
+ * @returns {Promise<void>}
+ */
 async function dblp(topic, publications) {
     let result = await fetch(encodeURI(`https://dblp.org/search/publ/api?q=${topic}&format=json`), {
         method: 'GET',
@@ -77,7 +141,7 @@ async function dblp(topic, publications) {
             'Accept': 'application/json',
         },
     })
-    .then(response => response.json());
+        .then(response => response.json());
 
     const papers = result["result"]["hits"]["hit"]; // an array of papers
 
@@ -105,6 +169,14 @@ async function dblp(topic, publications) {
     });
 }
 
+/**
+ * Fetches publications from ArXiv API based on the provided topic.
+ * @async
+ * @function arxiv
+ * @param {string} topic - The search topic.
+ * @param {Array} publications - The array to store publication results.
+ * @returns {Promise<void>}
+ */
 async function arxiv(topic, publications) {
     const encodedTopic = encodeURIComponent(topic);
     const url = `http://export.arxiv.org/api/query?search_query=all:${encodedTopic}&start=0&max_results=100`;
@@ -138,6 +210,11 @@ async function arxiv(topic, publications) {
     }
 }
 
+/**
+ * Displays the list of publications in a table format.
+ * @function displayPublications
+ * @param {Array} publications - The array of publications to display.
+ */
 function displayPublications(publications) {
     const publicationContainer = document.getElementById('publications');
     publicationContainer.innerHTML = "<h2>Search Results</h2>";
