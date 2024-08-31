@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vidvaan</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
     <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 </head>
 
 <body>
-    <div class="search-container">
-        <input type="text" id="topic" placeholder="Enter the search topic">
-        <button onclick="work()">Search</button>
-        <button onclick="exportExcel()">Download Excel</button>
+    <div class="container">
+        <h1 style="text-align: center;">Vidvaan Publications Search</h1>
+        <div class="search-bar">
+            <input type="text" id="topic" placeholder="Enter the search topic">
+            <button style="margin-right: 4px;" onclick="work()">Get</button>
+            <button onclick="exportExcel()"> Download Excel</button>
+        </div>
+        <div id="publications" class="results">
+            <!-- Results will be displayed here -->
+        </div>
     </div>
-    <div id="publications" class="container"></div>
     <script src="script.js"></script>
 </body>
 
