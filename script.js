@@ -1,3 +1,13 @@
+// Debounce function to limit the frequency of search calls
+let debounceTimeout;
+
+document.getElementById("topic").addEventListener("input", () => {
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => {
+        work();
+    }, 500); // Wait for 500ms before triggering the search
+});
+
 /**
  * Main function that consolidates publications from various sources
  * and displays them.
@@ -6,14 +16,32 @@
  */
 async function work() {
     const topic = document.getElementById("topic").value;
+    if (topic === "") return;
     const publications = [];
+    const publicationContainer = document.getElementById('publications');
 
-    // Fetch from all sources and consolidate the results
-    await dblp(topic, publications);
-    await arxiv(topic, publications);
-    await openalex(topic, publications);
-    await openLibrary(topic, publications);
-    displayPublications(publications);
+    // Clear the previous results
+    publicationContainer.innerHTML = "<h2>Loading...</h2>";
+
+    try {
+        // Fetch from all sources in parallel
+        const fetchFunctions = [dblp(topic), arxiv(topic), openalex(topic), openLibrary(topic)];
+
+        for (let fetchPromise of fetchFunctions) {
+            const results = await fetchPromise;
+            publications.push(...results);
+            // Display partial results
+            displayPublications(publications);
+        }
+
+        // Store publications globally to manage pagination
+        window.publications = publications;
+
+        // Final display with all results
+        displayPublications(publications);
+    } catch (error) {
+        publicationContainer.innerHTML = `<p>Error fetching publications: ${error.message}</p>`;
+    }
 }
 async function openLibrary(topic, publications) {
     const encodedTopic = encodeURIComponent(topic);
@@ -56,12 +84,13 @@ async function openLibrary(topic, publications) {
  * @async
  * @function openLibrary
  * @param {string} topic - The search topic.
- * @param {Array} publications - The array to store publication results.
- * @returns {Promise<void>}
+ * @returns {Promise<Array>} - The array of publication results.
  */
-async function openLibrary(topic, publications) {
+async function openLibrary(topic) {
     const encodedTopic = encodeURIComponent(topic);
     const url = `https://openlibrary.org/search.json?q=${encodedTopic}`;
+    const publications = [];
+
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -69,11 +98,8 @@ async function openLibrary(topic, publications) {
         }
 
         const data = await response.json();
-
-        // Make sure 'docs' key exists in the response data
         if (data.docs && Array.isArray(data.docs)) {
             data.docs.forEach(work => {
-                // Check if the necessary fields exist
                 const title = work.title || 'Unknown Title';
                 const year = work.first_publish_year || 'Unknown Year';
                 const authors = work.author_name ? work.author_name.join(', ') : 'Unknown Authors';
@@ -91,6 +117,8 @@ async function openLibrary(topic, publications) {
     } catch (error) {
         console.error('Error fetching publications:', error);
     }
+
+    return publications;
 }
 
 /**
@@ -98,12 +126,12 @@ async function openLibrary(topic, publications) {
  * @async
  * @function openalex
  * @param {string} topic - The search topic.
- * @param {Array} publications - The array to store publication results.
- * @returns {Promise<void>}
+ * @returns {Promise<Array>} - The array of publication results.
  */
-async function openalex(topic, publications) {
+async function openalex(topic) {
     const encodedTopic = encodeURIComponent(topic);
     const url = `https://api.openalex.org/works?filter=title.search:${encodedTopic}`;
+    const publications = [];
 
     try {
         const response = await fetch(url);
@@ -124,6 +152,8 @@ async function openalex(topic, publications) {
     } catch (error) {
         console.error('Error fetching publications:', error);
     }
+
+    return publications;
 }
 
 /**
@@ -131,42 +161,45 @@ async function openalex(topic, publications) {
  * @async
  * @function dblp
  * @param {string} topic - The search topic.
- * @param {Array} publications - The array to store publication results.
- * @returns {Promise<void>}
+ * @returns {Promise<Array>} - The array of publication results.
  */
-async function dblp(topic, publications) {
-    let result = await fetch(encodeURI(`https://dblp.org/search/publ/api?q=${topic}&format=json`), {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-        },
-    })
-        .then(response => response.json());
+async function dblp(topic) {
+    const publications = [];
 
-    const papers = result["result"]["hits"]["hit"]; // an array of papers
+    try {
+        let result = await fetch(encodeURI(`https://dblp.org/search/publ/api?q=${topic}&format=json`), {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            },
+        }).then(response => response.json());
 
-    papers.forEach(paper => {
-        let authors = 'Unknown';
+        const papers = result["result"]["hits"]["hit"]; // an array of papers
 
-        // Check if the authors field exists
-        if (paper.info.authors && paper.info.authors.author) {
-            if (Array.isArray(paper.info.authors.author)) {
-                // If it's an array, map over the array
-                authors = paper.info.authors.author.map(a => a.text).join(', ');
-            } else {
-                // If it's an object, handle it as a single author
-                authors = paper.info.authors.author.text;
+        papers.forEach(paper => {
+            let authors = 'Unknown';
+
+            if (paper.info.authors && paper.info.authors.author) {
+                if (Array.isArray(paper.info.authors.author)) {
+                    authors = paper.info.authors.author.map(a => a.text).join(', ');
+                } else {
+                    authors = paper.info.authors.author.text;
+                }
             }
-        }
 
-        publications.push({
-            title: paper.info.title,
-            year: paper.info.year,
-            authors: authors,
-            url: paper.info.url,
-            repo: 'DBLP'
+            publications.push({
+                title: paper.info.title,
+                year: paper.info.year,
+                authors: authors,
+                url: paper.info.url,
+                repo: 'DBLP'
+            });
         });
-    });
+    } catch (error) {
+        console.error('Error fetching publications:', error);
+    }
+
+    return publications;
 }
 
 /**
@@ -174,12 +207,12 @@ async function dblp(topic, publications) {
  * @async
  * @function arxiv
  * @param {string} topic - The search topic.
- * @param {Array} publications - The array to store publication results.
- * @returns {Promise<void>}
+ * @returns {Promise<Array>} - The array of publication results.
  */
-async function arxiv(topic, publications) {
+async function arxiv(topic) {
     const encodedTopic = encodeURIComponent(topic);
     const url = `http://export.arxiv.org/api/query?search_query=all:${encodedTopic}&start=0&max_results=100`;
+    const publications = [];
 
     try {
         const response = await fetch(url);
@@ -208,93 +241,116 @@ async function arxiv(topic, publications) {
     } catch (error) {
         console.error('Error fetching publications:', error);
     }
+
+    return publications;
 }
 
 /**
- * Displays the list of publications in a table format.
+ * Displays the list of publications in a paginated table format.
  * @function displayPublications
  * @param {Array} publications - The array of publications to display.
+ * @param {number} currentPage - The current page number to display.
+ * @param {number} rowsPerPage - The number of rows to display per page.
  */
-function displayPublications(publications) {
+function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
     const publicationContainer = document.getElementById('publications');
     publicationContainer.innerHTML = "<h2>Search Results</h2>";
 
     if (publications.length === 0) {
         publicationContainer.innerHTML += "<p>No publications found for this topic.</p>";
-    } else {
-        // Create the table and header row
-        const table = document.createElement('table');
-        table.className = 'sortable';
-        table.style.borderCollapse = 'collapse';
+        return;
+    }
 
-        const headerRow = document.createElement('tr');
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = startIndex + rowsPerPage;
+    const paginatedPublications = publications.slice(startIndex, endIndex);
 
-        const titleHeader = document.createElement('th');
-        titleHeader.textContent = 'Title';
-        titleHeader.style.border = '1px solid black';
-        titleHeader.style.padding = '8px';
-        titleHeader.style.textAlign = 'left';
+    const table = document.createElement('table');
+    table.className = 'sortable';
+    table.style.borderCollapse = 'collapse';
 
-        const yearHeader = document.createElement('th');
-        yearHeader.textContent = 'Year';
-        yearHeader.style.border = '1px solid black';
-        yearHeader.style.padding = '8px';
-        yearHeader.style.textAlign = 'left';
+    const headerRow = document.createElement('tr');
 
-        const authorsHeader = document.createElement('th');
-        authorsHeader.textContent = 'Authors';
-        authorsHeader.style.border = '1px solid black';
-        authorsHeader.style.padding = '8px';
-        authorsHeader.style.textAlign = 'left';
+    const titleHeader = document.createElement('th');
+    titleHeader.textContent = 'Title';
+    titleHeader.style.border = '1px solid black';
+    titleHeader.style.padding = '8px';
+    titleHeader.style.textAlign = 'left';
 
-        const repoHeader = document.createElement('th');
-        repoHeader.textContent = 'Academic Database';
-        repoHeader.style.border = '1px solid black';
-        repoHeader.style.padding = '8px';
-        repoHeader.style.textAlign = 'left';
+    const yearHeader = document.createElement('th');
+    yearHeader.textContent = 'Year';
+    yearHeader.style.border = '1px solid black';
+    yearHeader.style.padding = '8px';
+    yearHeader.style.textAlign = 'left';
 
-        headerRow.appendChild(titleHeader);
-        headerRow.appendChild(yearHeader);
-        headerRow.appendChild(authorsHeader);
-        headerRow.appendChild(repoHeader);
-        table.appendChild(headerRow);
+    const authorsHeader = document.createElement('th');
+    authorsHeader.textContent = 'Authors';
+    authorsHeader.style.border = '1px solid black';
+    authorsHeader.style.padding = '8px';
+    authorsHeader.style.textAlign = 'left';
 
-        // Append rows for each publication
-        publications.forEach(pub => {
-            const row = document.createElement('tr');
+    const repoHeader = document.createElement('th');
+    repoHeader.textContent = 'Academic Database';
+    repoHeader.style.border = '1px solid black';
+    repoHeader.style.padding = '8px';
+    repoHeader.style.textAlign = 'left';
 
-            const titleCell = document.createElement('td');
-            const link = document.createElement('a');
-            link.href = pub.url;
-            link.textContent = pub.title;
-            link.target = '_blank'; // Opens the link in a new tab
-            titleCell.appendChild(link);
-            titleCell.style.border = '1px solid black';
-            titleCell.style.padding = '8px';
+    headerRow.appendChild(titleHeader);
+    headerRow.appendChild(yearHeader);
+    headerRow.appendChild(authorsHeader);
+    headerRow.appendChild(repoHeader);
+    table.appendChild(headerRow);
 
-            const yearCell = document.createElement('td');
-            yearCell.textContent = pub.year;
-            yearCell.style.border = '1px solid black';
-            yearCell.style.padding = '8px';
+    paginatedPublications.forEach(pub => {
+        const row = document.createElement('tr');
 
-            const authorsCell = document.createElement('td');
-            authorsCell.textContent = pub.authors;
-            authorsCell.style.border = '1px solid black';
-            authorsCell.style.padding = '8px';
+        const titleCell = document.createElement('td');
+        const link = document.createElement('a');
+        link.href = pub.url;
+        link.textContent = pub.title;
+        link.target = '_blank'; // Opens the link in a new tab
+        titleCell.appendChild(link);
+        titleCell.style.border = '1px solid black';
+        titleCell.style.padding = '8px';
 
-            const repoCell = document.createElement('td');
-            repoCell.textContent = pub.repo;
-            repoCell.style.border = '1px solid black';
-            repoCell.style.padding = '8px';
+        const yearCell = document.createElement('td');
+        yearCell.textContent = pub.year;
+        yearCell.style.border = '1px solid black';
+        yearCell.style.padding = '8px';
 
-            row.appendChild(titleCell);
-            row.appendChild(yearCell);
-            row.appendChild(authorsCell);
-            row.appendChild(repoCell);
-            table.appendChild(row);
-        });
+        const authorsCell = document.createElement('td');
+        authorsCell.textContent = pub.authors;
+        authorsCell.style.border = '1px solid black';
+        authorsCell.style.padding = '8px';
 
-        // Append the table to the container
-        publicationContainer.appendChild(table);
+        const repoCell = document.createElement('td');
+        repoCell.textContent = pub.repo;
+        repoCell.style.border = '1px solid black';
+        repoCell.style.padding = '8px';
+
+        row.appendChild(titleCell);
+        row.appendChild(yearCell);
+        row.appendChild(authorsCell);
+        row.appendChild(repoCell);
+        table.appendChild(row);
+    });
+
+    publicationContainer.appendChild(table);
+
+    // Add pagination controls if needed
+    if (publications.length > rowsPerPage) {
+        const paginationControls = document.createElement('div');
+        paginationControls.className = 'pagination-controls';
+        const totalPages = Math.ceil(publications.length / rowsPerPage);
+
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.textContent = i;
+            pageButton.style.margin = '2px';
+            pageButton.addEventListener('click', () => displayPublications(publications, i, rowsPerPage));
+            paginationControls.appendChild(pageButton);
+        }
+
+        publicationContainer.appendChild(paginationControls);
     }
 }
