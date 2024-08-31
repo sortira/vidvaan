@@ -60,8 +60,8 @@ async function work() {
  * @function applyYearFilter
  */
 function applyYearFilter() {
-    const startYear = parseInt(document.getElementById("startYear").value);
-    const endYear = parseInt(document.getElementById("endYear").value);
+    const startYear = parseInt(document.getElementById("startYear").value) | 1800;
+    const endYear = parseInt(document.getElementById("endYear").value) | 9999;
 
 
     if (endYear < startYear) return;
@@ -277,7 +277,7 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
     const paginatedPublications = publications.slice(startIndex, endIndex);
 
     const table = document.createElement('table');
-    table.className = 'sortable';
+    table.className = 'pubs';
     table.style.borderCollapse = 'collapse';
 
     const headerRow = document.createElement('tr');
@@ -380,9 +380,9 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
 
 
 function exportExcel() {
-    $('.sortable').table2excel({
+    $('.pubs').table2excel({
         exclude: ".no-export",
-        filename: "download.xls",
+        filename: "Vidvaan Report on " + document.getElementById("topic").value.trim() + ".xls",
         fileext: ".xls",
         exclude_links: false,
         exclude_inputs: true
