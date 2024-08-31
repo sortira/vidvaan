@@ -12,11 +12,13 @@
 </head>
 
 <body>
-    <input type="text" id="topic" placeholder="Enter the search topic">
-    <button onclick="work()">Search</button>
-    <button onclick="exportExcel()">Download Excel</button>
+    <div class="search-container">
+        <input type="text" id="topic" placeholder="Enter the search topic">
+        <button onclick="work()">Search</button>
+        <button onclick="exportExcel()">Download Excel</button>
+    </div>
+    <div id="publications" class="container"></div>
     <script src="script.js"></script>
-    <div id="publications" class="container">
 </body>
 
 </html>
