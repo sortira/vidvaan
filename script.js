@@ -6,9 +6,44 @@ async function work() {
     await dblp(topic, publications);
     await arxiv(topic, publications);
     await openalex(topic, publications);
-
+    await openLibrary(topic, publications);
     displayPublications(publications);
 }
+async function openLibrary(topic, publications) {
+    const encodedTopic = encodeURIComponent(topic);
+    const url = `https://openlibrary.org/search.json?q=${encodedTopic}`;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Error fetching data: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        // Make sure 'docs' key exists in the response data
+        if (data.docs && Array.isArray(data.docs)) {
+            data.docs.forEach(work => {
+                // Check if the necessary fields exist
+                const title = work.title || 'Unknown Title';
+                const year = work.first_publish_year || 'Unknown Year';
+                const authors = work.author_name ? work.author_name.join(', ') : 'Unknown Authors';
+                const seed = work.seed && work.seed.length > 0 ? work.seed[0] : 'No Seed Available';
+
+                publications.push({
+                    title: title,
+                    year: year,
+                    authors: authors,
+                    url: `https://openlibrary.org${seed}`,
+                    repo: 'OpenLibrary'
+                    
+                });
+            });
+        }
+    } catch (error) {
+        console.error('Error fetching publications:', error);
+    }
+}
+
 
 async function openalex(topic, publications) {
     const encodedTopic = encodeURIComponent(topic);
