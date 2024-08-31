@@ -325,3 +325,16 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
         publicationContainer.appendChild(paginationControls);
     }
 }
+
+
+
+
+function exportExcel() {
+    $('.sortable').table2excel({
+        exclude: ".no-export",
+        filename: "download.xls",
+        fileext: ".xls",
+        exclude_links: false,
+        exclude_inputs: true
+    });
+}
