@@ -102,6 +102,26 @@ a {
 a:hover {
     color: #0056b3;
 }
+.pagination-controls button {
+    padding: 8px 12px;
+    background-color: #f4f4f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-controls button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+    font-weight: bold;
+}
+
+.pagination-controls button:hover {
+    background-color: #e7f0ff;
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
