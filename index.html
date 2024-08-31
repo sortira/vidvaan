@@ -16,7 +16,15 @@
         <input type="text" id="topic" placeholder="Enter the search topic">
         <button onclick="work()">Search</button>
         <button onclick="exportExcel()">Download Excel</button>
+        <br />
+        <input type="number" id="startYear" placeholder="Start Year" min="1900" max="2100">
+        <input type="number" id="endYear" placeholder="End Year" min="1900" max="2100">
+        <button onclick="applyYearFilter()">Apply Filter</button>
     </div>
+
+
+
+
     <div id="publications" class="container"></div>
     <script src="script.js"></script>
 </body>

@@ -43,6 +43,26 @@ input[type="text"]:focus {
     border-color: #007bff;
 }
 
+input[type="number"] {
+    width: 300px;
+    padding: 12px 20px;
+    margin-right: 10px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+}
+
+input[type="number"]:focus {
+    border-color: #007bff;
+}
+
+
+
+
+
 button {
     padding: 12px 20px;
     background-color: #007bff;
@@ -56,6 +76,7 @@ button {
 
 button:hover {
     background-color: #0056b3;
+    border: black;
 }
 
 /* Container Styling */

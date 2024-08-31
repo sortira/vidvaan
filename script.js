@@ -1,5 +1,7 @@
 // Debounce function to limit the frequency of search calls
 let debounceTimeout;
+let originalPublications = [];
+
 
 document.getElementById("topic").addEventListener("input", () => {
     clearTimeout(debounceTimeout);
@@ -41,6 +43,7 @@ async function work() {
         }
 
         // Store publications globally to manage pagination
+        originalPublications = publications.slice(); // Store a copy of the original publications
         window.publications = publications;
 
         // Final display with all results
@@ -49,6 +52,38 @@ async function work() {
         publicationContainer.innerHTML = `<p>Error fetching publications: ${error.message}</p>`;
     }
 }
+
+
+
+/**
+ * Filters the publications based on the start and end year.
+ * @function applyYearFilter
+ */
+function applyYearFilter() {
+    const startYear = parseInt(document.getElementById("startYear").value);
+    const endYear = parseInt(document.getElementById("endYear").value);
+
+    const filteredPublications = originalPublications.filter(pub => {
+        const pubYear = parseInt(pub.year);
+        return (!isNaN(startYear) ? pubYear >= startYear : true) &&
+            (!isNaN(endYear) ? pubYear <= endYear : true);
+    });
+
+    // Re-render the table with filtered results
+    window.publications = filteredPublications; // Update the publications array with the filtered results
+    displayPublications(filteredPublications);
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 /**
