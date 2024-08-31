@@ -332,8 +332,8 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
 function exportExcel() {
     $('.sortable').table2excel({
         exclude: ".no-export",
-        filename: "download.xls",
-        fileext: ".xls",
+        filename: "download.xlsx",
+        fileext: ".xlsx",
         exclude_links: false,
         exclude_inputs: true
     });
