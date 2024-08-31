@@ -14,11 +14,12 @@
         <h1 style="text-align: center;">Vidvaan Publications Search</h1>
         <div class="search-bar">
             <input type="text" id="topic" placeholder="Enter the search topic">
-            <button style="margin-right: 4px;" onclick="work()">Get</button>
+            <button style="margin-right: 4px;" onclick="work()">Search</button>
             <button onclick="exportExcel()"> Download Excel</button>
             <br />
-            <input type="number" id="startYear" placeholder="Start Year" min="1900" max="2100">
-            <input type="number" id="endYear" placeholder="End Year" min="1900" max="2100">
+            <input type="number" id="startYear" placeholder="Start Year" min="1900" max="2100"
+                onchange="applyYearFilter()">
+            <input type="number" id="endYear" placeholder="End Year" min="1900" max="2100" onchange="applyYearFilter()">
             <button onclick="applyYearFilter()">Apply Filter</button>
         </div>
         <div id="publications" class="results">

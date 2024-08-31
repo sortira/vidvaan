@@ -63,6 +63,10 @@ function applyYearFilter() {
     const startYear = parseInt(document.getElementById("startYear").value);
     const endYear = parseInt(document.getElementById("endYear").value);
 
+
+    if (endYear < startYear) return;
+
+
     const filteredPublications = originalPublications.filter(pub => {
         const pubYear = parseInt(pub.year);
         return (!isNaN(startYear) ? pubYear >= startYear : true) &&
