@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Publication Search</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div>
-        <label for="topic">Enter Topic:</label>
-        <input type="text" id="topic" placeholder="Search for publications...">
-    </div>
-    <div id="publications"></div>
+<html>
 
-    <script src="scripts.js"></script>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Vidvaan</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+</head>
+
+<body>
+    <input type="text" id="topic" placeholder="Enter the search topic">
+    <button onclick="work()">Search</button>
+    <button onclick="exportExcel()">Download Excel</button>
+    <script src="script.js"></script>
+    <div id="publications" class="container">
 </body>
+
 </html>
