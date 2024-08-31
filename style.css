@@ -8,17 +8,19 @@ body {
 }
 
 /* Search Bar Container */
+/* Search Bar Container */
 .search-container {
-    position: fixed;
-    top: 0;
     width: 100%;
     background-color: #f4f4f9;
     padding: 20px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Center elements horizontally */
+    align-items: center; /* Center elements vertically */
+    gap: 10px; /* Add spacing between buttons */
 }
+
 
 /* Input and Button Styling */
 input[type="text"] {

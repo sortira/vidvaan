@@ -183,7 +183,7 @@ async function dblp(topic) {
  */
 async function arxiv(topic) {
     const encodedTopic = encodeURIComponent(topic);
-    const url = `http://export.arxiv.org/api/query?search_query=all:${encodedTopic}&start=0&max_results=100`;
+    const url = `https://export.arxiv.org/api/query?search_query=all:${encodedTopic}&start=0&max_results=100`;
     const publications = [];
 
     try {
@@ -326,6 +326,8 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
             const pageButton = document.createElement('button');
             pageButton.textContent = i;
             pageButton.style.margin = '2px';
+            pageButton.style.border = i === currentPage ? '2px solid #000000' : 'none'; // Add border to the active page
+            pageButton.style.backgroundColor = i === currentPage ? '#007bff' : '#007bff'; // Highlight the active page
             pageButton.addEventListener('click', () => displayPublications(publications, i, rowsPerPage));
             paginationControls.appendChild(pageButton);
         }
@@ -333,6 +335,7 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
         publicationContainer.appendChild(paginationControls);
     }
 }
+
 
 
 
