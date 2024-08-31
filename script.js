@@ -326,8 +326,8 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
             const pageButton = document.createElement('button');
             pageButton.textContent = i;
             pageButton.style.margin = '2px';
-            pageButton.style.border = i === currentPage ? '2px solid #000000' : 'none'; // Add border to the active page
-            pageButton.style.backgroundColor = i === currentPage ? '#007bff' : '#007bff'; // Highlight the active page
+            pageButton.style.border = i === currentPage ? '3px solid #000000' : 'none'; // Add border to the active page
+            pageButton.style.backgroundColor = i === currentPage ? '#007bff' : 'cyan'; // Highlight the active page
             pageButton.addEventListener('click', () => displayPublications(publications, i, rowsPerPage));
             paginationControls.appendChild(pageButton);
         }
