@@ -23,7 +23,50 @@ function exportExcel() {
     }
     wb.SheetNames.push("Report Sheet");
     pubarr.unshift(["Name     ", "Year    ", "Authors        ", "Link             ", "Academic Database"])
-    wb.Sheets["Report Sheet"] = XLSX.utils.aoa_to_sheet(pubarr);
+    var ws = XLSX.utils.aoa_to_sheet(pubarr);
+    //change width of columns
+    var wscols = [{wch:50},{wch:10},{wch:60},{wch:50},{wch:20}];
+    ws['!cols'] = wscols;
+
+    //final pushout sheet
+    wb.Sheets["Report Sheet"] = ws;
+
+    //enable wrapText
+    for (i in ws) {
+        if (typeof(ws[i]) != "object") continue;
+        let cell = XLSX.utils.decode_cell(i);
+    
+        ws[i].s = { // styling for all cells
+            font: {
+                name: "arial"
+            },
+            alignment: {
+                vertical: "center",
+                horizontal: "center",
+                wrapText: true, // any truthy value here
+            },
+            border: {
+                right: {
+                    style: "thin",
+                    color: "000000"
+                },
+                left: {
+                    style: "thin",
+                    color: "000000"
+                },
+            }
+        }
+
+        //make linkable
+        if(cell.c==4 && cell.r > 1)
+            {
+                var addrss = "D"+String(cell.r);
+                ws[addrss].l = {Target:ws[addrss].v};
+                
+
+                
+            }
+    }
     var wbout = XLSX.write(wb, { booktype: 'xlsx', type: 'binary' });
     saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Vidvaan Report.xlsx');
 
