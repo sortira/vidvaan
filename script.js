@@ -10,12 +10,6 @@ document.getElementById("topic").addEventListener("input", () => {
     }, 500); // Wait for 500ms before triggering the search
 });
 
-/**
- * Main function that consolidates publications from various sources
- * and displays them.
- * @async
- * @function work
- */
 async function work() {
     const topic = document.getElementById("topic").value.trim();
     const publicationContainer = document.getElementById('publications');
@@ -49,6 +43,9 @@ async function work() {
 
         // Final display with all results
         displayPublications(publications);
+
+        // Show filter and download controls after data is loaded
+        document.getElementById('filter-download-container').style.display = 'block';
     } catch (error) {
         publicationContainer.innerHTML = `<p>Error fetching publications: ${error.message}</p>`;
     }
@@ -392,36 +389,35 @@ function exportExcel() {
         exclude_inputs: true
     });
     */
-    
-    
+
+
     //console.log(pubarr);
     //console.log(originalPublications);
-    const pubarr = originalPublications.map((obj)=>{return Object.keys(obj).map((key)=>{return obj[key];});});
+    const pubarr = originalPublications.map((obj) => { return Object.keys(obj).map((key) => { return obj[key]; }); });
     var wb = XLSX.utils.book_new();
     wb.Props
     {
-        Title:"Vidvaan Report";
-        Subject:"Report";
-        Author:"Team Vidvaan";
-        
+        Title: "Vidvaan Report";
+        Subject: "Report";
+        Author: "Team Vidvaan";
+
     }
     wb.SheetNames.push("Report Sheet");
-    pubarr.unshift(["Name     ","Year    ","Authors        ","Link             ","Academic Database"])
+    pubarr.unshift(["Name     ", "Year    ", "Authors        ", "Link             ", "Academic Database"])
     wb.Sheets["Report Sheet"] = XLSX.utils.aoa_to_sheet(pubarr);
-    var wbout = XLSX.write(wb,{booktype:'xlsx',type:'binary'});
-    saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Vidvaan Report.xlsx');
+    var wbout = XLSX.write(wb, { booktype: 'xlsx', type: 'binary' });
+    saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), 'Vidvaan Report.xlsx');
 
 }
-function convertToArray(tup)
-{
+function convertToArray(tup) {
     var Arr = Object.keys(tup).map(
         (key) => tup[key]);
     return Arr;
 }
 
-function s2ab(s) { 
+function s2ab(s) {
     var buf = new ArrayBuffer(s.length); //convert s to arrayBuffer
     var view = new Uint8Array(buf);  //create uint8array as viewer
-    for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; //convert to octet
-    return buf;    
+    for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; //convert to octet
+    return buf;
 }

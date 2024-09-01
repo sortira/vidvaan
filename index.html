@@ -26,7 +26,7 @@
         <nav class="nav">
             <h1>Vidvaan Publications  </h1>
         </nav>
-        
+
     </header>
 
     <main>
@@ -40,20 +40,25 @@
                         <label for="topic" class="heading">Search</label>
                         <br>
                         <input type="text" class="search" id="topic" placeholder="Enter the search topic">
-                        <button class="btn1"  onclick="work()"> Search</button>
-                        
+                        <button class="btn1" onclick="work()"> Search</button>
                     </div>
-                    <div class="filter">
-                        <label for="startYear" class="heading">Filter</label>
-                        <br>
-                        <input type="number" class="year" id="startYear" placeholder="Start Year" min="1900" max="2100"onchange="applyYearFilter()">
-                        <input type="number" class="year" id="endYear" placeholder="End Year" min="1900" max="2100" onchange="applyYearFilter()">
-                        <button class="btn1" onclick="applyYearFilter()">󰈲 Filter</button>
-                    </div>
-                    <div class="exel">
-                        <label class="heading">Download</label>
-                        <br>
-                        <button class="btn2" onclick="exportExcel()">󰇚 Download Excel</button>
+
+                    <!-- Filter and Download controls container, initially hidden -->
+                    <div id="filter-download-container" style="display: none;">
+                        <div class="filter">
+                            <label for="startYear" class="heading">Filter</label>
+                            <br>
+                            <input type="number" class="year" id="startYear" placeholder="Start Year" min="1900"
+                                max="2100" onchange="applyYearFilter()">
+                            <input type="number" class="year" id="endYear" placeholder="End Year" min="1900" max="2100"
+                                onchange="applyYearFilter()">
+                            <button class="btn1" onclick="applyYearFilter()">󰈲 Filter</button>
+                        </div>
+                        <div class="exel">
+                            <label class="heading">Download</label>
+                            <br>
+                            <button class="btn2" onclick="exportExcel()">󰇚 Download Excel</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -73,9 +78,9 @@
 
 
     <div id="publications" class="container">
-        
+
     </div>
-    
+
     <script src="script.js"></script>
 </body>
 
