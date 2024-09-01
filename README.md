@@ -1,3 +1,68 @@
+# 📚 Vidvaan
+
+Welcome to **Vidvaan**! A comprehensive web application that consolidates academic publications from multiple sources like DBLP, ArXiv, OpenLibrary, and OpenAlex, all in one place. Easily search, view, and download results as an Excel file. 🚀
+
+## 🌟 Features
+
+- **Multi-source Search:** Query multiple academic databases simultaneously.
+- **Real-time Results:** Instant search with debouncing to limit frequency.
+- **Pagination Controls:** Navigate large result sets with ease.
+- **Export to Excel:** Download your search results in `.xls` format.
+- **Dynamic Updates:** View partial results while the full search is still running.
+
+## 🛠️ Tech Stack
+
+- **HTML5 & CSS3**: For structuring and styling the application.
+- **JavaScript**: The core logic of the application.
+- **jQuery**: Simplifying DOM manipulation and AJAX calls.
+- **APIs Used**:
+  - DBLP
+  - ArXiv
+  - OpenLibrary
+  - OpenAlex
+- **External Libraries**:
+  - `jquery.table2excel`: For exporting HTML tables to Excel files.
+
+## 🚀 Getting Started
+
+1. **Clone the repository**:
+    ```bash
+    git clone https://github.com/your-username/vidvaan.git
+    ```
+2. **Open the project folder**:
+    ```bash
+    cd vidvaan
+    ```
+3. **Open `index.html`** in your favorite web browser.
+
+## 📄 How to Use
+
+1. **Search for a Topic**: Enter your search topic in the input field and click the **Search** button.
+2. **View Results**: Results from DBLP, ArXiv, OpenLibrary, and OpenAlex will be displayed in a sortable table.
+3. **Pagination**: Use the vertical pagination buttons to navigate through pages of results.
+4. **Export to Excel**: Click on the **Download Excel** button to export the current search results.
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/your-username/vidvaan/issues) or submit a pull request.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 💻 Author
+
+- **Aritro Shome** - [GitHub](https://github.com/sortira)
+- **SK Asif Tanvir**
+- **Sagnik**
+- **Prayas Sinha**
+- **Ahana Pal**
+- **Debjani Mondal**
+
+## ⭐ Acknowledgments
+
+- Thanks to the developers of the APIs and libraries used in this project.
+
 # Nerd Fonts
 
 This is an archived font from the Nerd Fonts release v3.2.1.
@@ -12,37 +77,4 @@ For more information see:
 
 For more information have a look at the upstream website: https://github.com/tonsky/FiraCode
 
-Version: 6.2
-
-## Which font?
-
-### TL;DR
-
-* Pick your font family:
-  * If you are limited to monospaced fonts (because of your terminal, etc) then pick a font with `Nerd Font Mono` (or `NFM`).
-  * If you want to have bigger icons (usually around 1.5 normal letters wide) pick a font without `Mono` i.e. `Nerd Font` (or `NF`). Most terminals support this, but ymmv.
-  * If you work in a proportional context (GUI elements or edit a presentation etc) pick a font with `Nerd Font Propo` (or `NFP`).
-
-### Ligatures
-
-Ligatures are generally preserved in the patched fonts.
-Nerd Fonts `v2.0.0` had no ligatures in the `Nerd Font Mono` fonts, this has been dropped with `v2.1.0`.
-If you have a ligature-aware terminal and don't want ligatures you can (usually) disable them in the terminal settings.
-
-### Explanation
-
-Once you narrow down your font choice of family (`Droid Sans`, `Inconsolata`, etc) and style (`bold`, `italic`, etc) you have 2 main choices:
-
-#### `Option 1: Download already patched font`
-
- * For a stable version download a font package from the [release page](https://github.com/ryanoasis/nerd-fonts/releases)
- * Or download the development version from the folders here
-
-#### `Option 2: Patch your own font`
-
- * Patch your own variations with the various options provided by the font patcher (i.e. not include all symbols for smaller font size)
-
-For more information see: [The FAQ](https://github.com/ryanoasis/nerd-fonts/wiki/FAQ-and-Troubleshooting#which-font)
-
-[SIL-RFN]:http://scripts.sil.org/cms/scripts/page.php?item_id=OFL_web_fonts_and_RFNs#14cbfd4a
 
