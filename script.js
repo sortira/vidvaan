@@ -273,10 +273,36 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
         return;
     }
 
+    // Calculate pagination
+    const totalPages = Math.ceil(publications.length / rowsPerPage);
     const startIndex = (currentPage - 1) * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
     const paginatedPublications = publications.slice(startIndex, endIndex);
 
+    // Create pagination controls
+    const paginationControls = document.createElement('div');
+    paginationControls.className = 'pagination-controls';
+    paginationControls.style.display = 'flex';
+    paginationControls.style.justifyContent = 'center';
+    paginationControls.style.marginBottom = '10px'; // Add some space between the pagination and the table
+
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.style.margin = '5px 5px';
+        pageButton.style.minWidth = '40px'; // Set a minimum width for the buttons
+        pageButton.style.padding = '10px 10px'; // Add padding for better spacing
+        pageButton.style.border = i === currentPage ? '3px solid #000000' : 'none'; // Highlight active page
+        pageButton.style.backgroundColor = i === currentPage ? 'rgb(227, 94, 53)' : 'rgba(227, 94, 53, 0.7)'; // Highlight active page
+        pageButton.style.color = '#fff'; // Set text color
+        pageButton.addEventListener('click', () => displayPublications(publications, i, rowsPerPage));
+        paginationControls.appendChild(pageButton);
+    }
+
+    // Append pagination controls to the publication container
+    publicationContainer.appendChild(paginationControls);
+
+    // Create the table
     const table = document.createElement('table');
     table.className = 'pubs';
     table.style.borderCollapse = 'collapse';
@@ -347,34 +373,10 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
         table.appendChild(row);
     });
 
+    // Append the table to the publication container
     publicationContainer.appendChild(table);
-
-    // Add vertical pagination controls on the right side
-    if (publications.length > rowsPerPage) {
-        const paginationControls = document.createElement('div');
-        paginationControls.className = 'pagination-controls';
-        paginationControls.style.position = 'fixed';
-        paginationControls.style.right = '10px';
-        paginationControls.style.top = '50%';
-        paginationControls.style.transform = 'translateY(-50%)';
-        paginationControls.style.display = 'flex';
-        paginationControls.style.flexDirection = 'column';
-
-        const totalPages = Math.ceil(publications.length / rowsPerPage);
-
-        for (let i = 1; i <= totalPages; i++) {
-            const pageButton = document.createElement('button');
-            pageButton.textContent = i;
-            pageButton.style.margin = '2px';
-            pageButton.style.border = i === currentPage ? '3px solid #000000' : 'none'; // Add border to the active page
-            pageButton.style.backgroundColor = i === currentPage ? '#007bff' : '#3C7398'; // Highlight the active page
-            pageButton.addEventListener('click', () => displayPublications(publications, i, rowsPerPage));
-            paginationControls.appendChild(pageButton);
-        }
-
-        publicationContainer.appendChild(paginationControls);
-    }
 }
+
 
 
 

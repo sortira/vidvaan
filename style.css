@@ -1,186 +1,267 @@
-/* General Styling */
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f9;
+*{
     margin: 0;
     padding: 0;
-    color: #333;
+    font-family: "Montserrat", system-ui;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    color: #fff;
+
 }
 
-/* Container Styling */
-.container {
-    width: 100%;
-    max-width: 900px;
-    margin: 20px auto; /* Center and add top margin */
-    background: white;
-    padding: 20px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+body{
+    background-color: #000;
 }
 
-/* Search Bar Container */
-.search-bar {
+main{
+    background-color: #000;
+}
+
+.nav{
+    height: 90px;
+    font-size: 25px;
     text-align: center;
+    line-height: 90px;
+    background-color: black;
+    position: fixed;
     width: 100%;
-    justify-content: center;
-    margin-bottom: 20px;
+    top: 0px;
+    z-index: 4;
 }
 
-/* Input and Button Styling */
-input[type="text"] {
-    width: 300px;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
-    transition: border-color 0.3s ease-in-out;
+.search{
+    text-align: center;
+    height: 40px;
 }
 
-input[type="text"]:focus {
-    border-color: #007bff;
+.section1{
+    background-color: #000;
+    padding-top: 100px;
+    padding-bottom: 40px;
 }
 
-input[type="number"] {
-    width: 300px;
-    padding: 12px 20px;
-    margin-right: 10px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
-    transition: border-color 0.3s ease-in-out;
+.heading{
+    font-size: 12px;
+    padding: 0 0 0 6px;
 }
 
-input[type="number"]:focus {
-    border-color: #007bff;
+.sec{
+    background-color: #1f1f1f;
+    margin: 0px 25px;
+    border-radius: 1rem;
+    height: 190px;
+    border: 1px solid white;
+    transition:all 0.2s ease-in;
+}
+
+.sec:hover{
+    background-color: #333;
+    transform: scale(1.01);
+}
+
+
+
+.qurry{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 55px;
+}
+
+#topic{
+    height: 40px;
+    width: 260px;
+    border-radius: 0.5rem;
+    padding: 0 0 0 25px;
+    color: #000;
+}
+
+#topic:active{
+    border: 2px solid rgb(227, 94, 53);
+}
+
+#topic:hover{
+    border: 2px solid rgb(227, 94, 53);
+}
+
+.btn1{
+    background-color: rgba(250, 146, 113, 1);
+    color: rgba(0, 0, 0, 1);
+    height: 44px;
+    width: 80px;
+    border-radius: 0.5rem;
+    
+}
+
+.btn1:hover{
+    background-color: rgb(227, 94, 53);
+}
+
+.year{
+    height: 40px;
+    width: 80px;
+    border-radius: 0.5rem;
+    padding: 0 0 0 20px;
+}
+
+.btn2{
+    background-color: rgb(255, 193, 174);
+    color: rgb(227, 94, 53);
+    height: 44px;
+    width: 150px;
+    border-radius: 0.5rem;
+    
+}
+
+.btn2:hover{
+    background-color: rgb(227, 94, 53);
+    color: #fff;
+}
+
+.container{
+    background-color: #000;
+}
+
+#publications{
+    margin: 0 25px;
+    background-color: #1f1f1f;
+    border-radius: 1rem;
+    border: 1px solid white;
+}
+
+.results{
+    text-align: center;
+}
+
+.results h2{
+    padding: 25px;
+}
+
+td{
+    border: 0px !important;
+}
+
+td:nth-of-type(1n){
+    text-align: left !important;
+}
+
+td:nth-of-type(1) a{
+    transition: all 1s ease !important;
+    padding-bottom: 5px;
 }
 
 
 
 
 
-button {
-    padding: 12px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease-in-out;
+td:nth-of-type(1) a {
+	color: #fff!important;
+  position: relative !important;
+  text-decoration: none !important;
 }
 
-button:hover {
-    background-color: #0056b3;
-    border: black;
+td:nth-of-type(1) a::before {
+  content: ''!important;
+  position: absolute!important;
+  width: 100%!important;
+  height: 4px!important;
+  border-radius: 4px!important;
+  background-color: #fff!important;
+  bottom: 0!important;
+  left: 0!important;
+  transform-origin: right!important;
+  transform: scaleX(0)!important;
+  transition: transform .3s ease-in-out!important;
 }
 
-/* Table Styling */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
+td:nth-of-type(1) a:hover::before {
+  transform-origin: left!important;
+  transform: scaleX(1)!important;
 }
 
-th, td {
-    padding: 12px;
-    text-align: left;
+td:nth-of-type(1) a:hover{
+    color: rgb(227, 94, 53) !important;
+    /* border-bottom: 2px solid white; */
 }
 
-th {
-    background-color: #007bff;
-    color: white;
-    font-weight: bold;
+  
+
+
+td:nth-of-type(2){
+    font-weight: 700;
 }
 
-td {
-    background-color: #f9f9f9;
-    border-bottom: 1px solid #ddd;
+tr:nth-of-type(1){
+    background-color: rgb(227, 94, 53);
 }
 
-tr:nth-child(even) td {
-    background-color: #f1f1f1;
+th{
+    font-weight: 700 !important;
+    border: 2px solid white !important;
 }
 
-a {
-    color: #007bff;
-    text-decoration: none;
-    transition: color 0.3s ease-in-out;
+th:nth-of-type(1){
+    border-left: 0px !important;
 }
 
-a:hover {
-    color: #0056b3;
-}
-/* Year Filter Box Styling */
-/* Year Filter Box Styling */
-.year-filter-box {
-    background-color: #f4f4f9; /* Match background color */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin: 0 auto 20px; /* Center the box and add bottom margin */
-    width: fit-content; /* Make the width fit the content */
-    text-align: center; /* Center align the text inside the box */
+th:nth-of-type(4){
+    border-right: 0px !important;
 }
 
-.year-filter-box h2 {
-    margin-top: 0;
-    font-size: 20px;
-    color: #333;
+td a{
+    
+    text-decoration: none !important;
 }
 
-/* Adjust input and button styling inside the year filter box */
-.year-filter-box input[type="number"] {
-    width: 150px; /* Increase width of input boxes */
-    padding: 12px 20px;
-    margin: 10px 5px; /* Add margin for spacing */
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
-    transition: border-color 0.3s ease-in-out;
+
+
+
+
+@media(min-width:559px) and (max-width:880px){
+    .qurry {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        padding: 25px 0;
+        flex-wrap: wrap;
+    }
 }
 
-.year-filter-box input[type="number"]:focus {
-    border-color: #007bff;
-}
-
-.year-filter-box button {
-    padding: 12px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin: 10px 5px; /* Add margin for spacing */
-    transition: background-color 0.3s ease-in-out;
-}
-
-.year-filter-box button:hover {
-    background-color: #0056b3;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .search-container {
+@media(max-width:559px){
+    .nav h1{
+        font-size: 25px;
+    }
+    .qurry {
         flex-direction: column;
-        padding: 10px;
+        justify-content: space-evenly;
+        align-items: center;
+        padding: 25px 0;
+        
     }
 
-    input[type="text"], button {
-        width: 100%;
-        margin: 5px 0;
+    #topic {
+        height: 40px;
+        margin: 0px 5px 5px;
+        width: 229px;
     }
 
-    .container {
-        margin-top: 20px; /* Adjust for smaller screens */
+    .btn1{
+        height: 40px;
+        margin: 0px 5px;
+        width: 258px;
+    }
+
+    .year{
+        height: 40px;
+        margin: 0px 5px 5px;
+        width: 98px;
+    }
+
+    .sec{
+        height: 335px;
+    }
+
+    #publications{
+        overflow: scroll;
     }
 }

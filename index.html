@@ -4,31 +4,77 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="book-solid.svg" type="image/x-icon">
     <title>Vidvaan</title>
-    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
+    <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script> -->
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
+    <header>
+        <nav class="nav">
+            <h1>Vidvaan Publications</h1>
+        </nav>
+        
+    </header>
+
+    <main>
+        <div class="section1">
+            <div class="sec">
+                <!-- <div class="search">
+                    <h2>Vidvaan Publications Search</h2>
+                </div> -->
+                <div class="qurry">
+                    <div class="ser">
+                        <label for="topic" class="heading">Search</label>
+                        <br>
+                        <input type="text" id="topic" placeholder="Enter the search topic">
+                        <button class="btn1"  onclick="work()">Search</button>
+                        
+                    </div>
+                    <div class="filter">
+                        <label for="startYear" class="heading">Filter</label>
+                        <br>
+                        <input type="number" class="year" id="startYear" placeholder="Start Year" min="1900" max="2100"onchange="applyYearFilter()">
+                        <input type="number" class="year" id="endYear" placeholder="End Year" min="1900" max="2100" onchange="applyYearFilter()">
+                        <button class="btn1" onclick="applyYearFilter()">Filter</button>
+                    </div>
+                    <div class="exel">
+                        <label class="heading">Download</label>
+                        <br>
+                        <button class="btn2" onclick="exportExcel()"> Download Excel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+
+
+
     <div class="container">
-        <h1 style="text-align: center;">Vidvaan Publications Search</h1>
-        <div class="search-bar">
-            <input type="text" id="topic" placeholder="Enter the search topic">
-            <button style="margin-right: 4px;" onclick="work()">Search</button>
-            <button onclick="exportExcel()">Download Excel</button>
-        </div>
-        <div class="year-filter-box">
-            <h2>Year Filter</h2>
-            <input type="number" id="startYear" placeholder="Start Year" min="1900" max="2100" onchange="applyYearFilter()">
-            <input type="number" id="endYear" placeholder="End Year" min="1900" max="2100" onchange="applyYearFilter()">
-            <button onclick="applyYearFilter()">Apply Filter</button>
-        </div>
         <div id="publications" class="results">
             <!-- Results will be displayed here -->
         </div>
     </div>
-    <div id="publications" class="container"></div>
+
+
+
+    <div id="publications" class="container">
+        
+    </div>
+    
     <script src="script.js"></script>
 </body>
 
