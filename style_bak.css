@@ -1,0 +1,400 @@
+@font-face {
+    font-family: 'MyCustomFont';
+    src: url('FiraCodeNerdFont-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'MyCustomFont';
+    color: #fff;
+}
+
+body {
+    background-color: #000;
+    font-family: 'MyCustomFont';
+}
+
+main {
+    background-color: #000;
+}
+
+.filter {
+    color: black;
+}
+
+.nav {
+    height: 60px;
+    font-size: 40px;
+    padding: 2%;
+    margin-bottom: 4%;
+    text-align: center;
+    line-height: 90px;
+    background-color: black;
+    position: fixed;
+    width: 100%;
+    top: 0px;
+    z-index: 4;
+}
+
+.search {
+    text-align: left;
+    height: 40px;
+    font-size: 16px;
+    color: #000;
+
+}
+
+.section1 {
+    /* padding: 2%; */
+
+    margin-top: 100px;
+    background-color: #000;
+    padding-top: 100px;
+    padding-bottom: 40px;
+    /* z-index: 4; */
+}
+
+.heading {
+    font-size: 18px;
+    padding: 0 0 0 6px;
+}
+
+.sec {
+    background-color: #1f1f1f;
+    width: 80%;
+    padding-bottom: 1%;
+    margin: 0 10%;
+    margin-top: 20px;
+    /* z-index: 6; */
+    /* text-align: center; */
+    border-radius: 1rem;
+    height: 150px;
+    border: 1px solid white;
+    transition: all 0.2s ease-in;
+}
+
+.sec:hover {
+    background-color: #333;
+    transform: scale(1.01);
+}
+
+
+
+.qurry {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 55px;
+}
+
+#topic {
+    height: 40px;
+    width: 260px;
+    border-radius: 0.5rem;
+    padding: 0 0 0 25px;
+    color: #000;
+}
+
+#topic:active {
+    border: 2px solid rgb(227, 94, 53);
+}
+
+#topic:hover {
+    border: 2px solid rgb(227, 94, 53);
+}
+
+.btn1 {
+    background-color: rgba(250, 146, 113, 1);
+    color: rgba(0, 0, 0, 1);
+    height: 44px;
+    width: 100px;
+    /* padding-right: 2%; */
+    border-radius: 0.5rem;
+    font-size: 16px;
+
+
+}
+
+.btn1:hover {
+    background-color: rgb(227, 94, 53);
+}
+
+.year {
+    height: 40px;
+    text-align: left;
+    width: 120px;
+    font-size: 16px;
+    color: black;
+    border-radius: 0.5rem;
+    padding: 0 0 0 20px;
+}
+
+.btn2 {
+    background-color: rgb(255, 146, 113);
+    color: black;
+    height: 44px;
+    font-size: 16px;
+
+    width: 180px;
+    border-radius: 0.5rem;
+
+}
+
+.btn2:hover {
+    background-color: rgb(227, 94, 53);
+    color: #fff;
+}
+
+.container {
+    width: 80%;
+    margin: 0 10%;
+
+    background-color: #000;
+}
+
+#publications {
+    /* width: 100%; */
+    /* margin: 0 10%; */
+    background-color: #1f1f1f;
+    border-radius: 1rem;
+    border: 1px solid white;
+}
+
+.results {
+    text-align: center;
+    width: 100%;
+}
+
+.results h2 {
+    padding: 25px;
+    font-size: 40px;
+}
+
+.results p {
+    padding: 25px;
+    font-size: 30px;
+}
+
+.pubs {
+    width: 100%;
+    /* border: 1px solid white; */
+
+}
+
+td {
+    border: 1px solid white !important;
+}
+
+td:nth-of-type(1n) {
+    text-align: left !important;
+}
+
+td:nth-of-type(1) a {
+    transition: all 1s ease !important;
+    padding-bottom: 5px;
+}
+
+
+
+
+
+td:nth-of-type(1) a {
+    color: #fff !important;
+    position: relative !important;
+    text-decoration: none !important;
+}
+
+td:nth-of-type(1) a::before {
+    content: '' !important;
+    position: absolute !important;
+    width: 100% !important;
+    height: 4px !important;
+    border-radius: 4px !important;
+    background-color: #fff !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    transform-origin: right !important;
+    transform: scaleX(0) !important;
+    transition: transform .3s ease-in-out !important;
+}
+
+td:nth-of-type(1) a:hover::before {
+    transform-origin: left !important;
+    transform: scaleX(1) !important;
+}
+
+td:nth-of-type(1) a:hover {
+    color: rgb(227, 94, 53) !important;
+    /* border-bottom: 2px solid white; */
+}
+
+
+
+
+td:nth-of-type(2) {
+    font-weight: 700;
+}
+
+tr:nth-of-type(1) {
+    background-color: rgb(227, 94, 53);
+}
+
+th {
+    font-weight: 700 !important;
+    border: 2px solid white !important;
+}
+
+th:nth-of-type(1) {
+    border-left: 0px !important;
+}
+
+th:nth-of-type(4) {
+    border-right: 0px !important;
+}
+
+td a {
+
+    text-decoration: none !important;
+}
+
+
+
+
+
+@media(min-width:559px) and (max-width:880px) {
+    .qurry {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        padding: 25px 0;
+        flex-wrap: wrap;
+    }
+}
+
+@media(max-width:559px) {
+    .nav h1 {
+        font-size: 25px;
+    }
+
+    .qurry {
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        padding: 25px 0;
+
+    }
+
+    #topic {
+        height: 40px;
+        margin: 0px 5px 5px;
+        width: 229px;
+    }
+
+    .btn1 {
+        height: 40px;
+        margin: 0px 5px;
+        width: 258px;
+    }
+
+    .year {
+        height: 40px;
+        margin: 0px 5px 5px;
+        width: 98px;
+    }
+
+    .sec {
+        height: 335px;
+    }
+
+    #publications {
+        overflow: scroll;
+    }
+}
+
+
+/* Enforce the width of the filter-download-container */
+#filter-download-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    /* Ensure the container takes up the full available width */
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    /* Prevent overflow */
+}
+
+/* Adjust the width of the filter and download sections */
+.filter,
+.exel {
+    flex: 1;
+    min-width: 200px;
+    /* Minimum width for each section */
+    box-sizing: border-box;
+    margin: 5px;
+}
+
+/* Inputs and buttons should not overflow */
+.filter input.year,
+.filter input#authorName,
+.filter .btn1,
+.exel .btn2 {
+    width: 100%;
+    /* Make sure the elements take the full width of their parent */
+    max-width: 100%;
+    /* Ensure they don't exceed their container's width */
+    box-sizing: border-box;
+    /* Include padding and borders within the width */
+    margin-bottom: 10px;
+    /* Spacing between elements */
+}
+
+/* Further adjustments for smaller screens */
+@media (max-width: 559px) {
+
+    .filter,
+    .exel {
+        flex: 1 1 100%;
+        /* Ensure each section takes full width on small screens */
+        margin: 5px 0;
+    }
+
+    .qurry {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    #filter-download-container {
+        flex-direction: column;
+        /* Stack elements vertically on small screens */
+    }
+
+    .btn1,
+    .btn2 {
+        width: 100%;
+        /* Ensure buttons are full-width */
+        margin: 5px 0;
+    }
+
+    .year,
+    #authorName {
+        width: 100%;
+        /* Ensure input fields take the full width */
+        margin: 5px 0;
+    }
+
+    .sec {
+        height: auto;
+        /* Adjust the height to prevent overflow */
+    }
+
+    #publications {
+        overflow-x: auto;
+        /* Allow horizontal scroll if content overflows */
+    }
+}

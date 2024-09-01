@@ -2,87 +2,46 @@
 <html lang="en">
 
 <head>
-
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="book-solid.svg" type="image/x-icon">
-    <title>Vidvaan</title>
-    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
-    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
-    <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script> -->
-
-    <link href="style.css" rel="stylesheet" type="text/css" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> -->
 </head>
 
 <body>
     <header>
-        <nav class="nav">
-            <h1>Vidvaan Publications  </h1>
-        </nav>
-
-    </header>
-
-    <main>
-        <div class="section1">
-            <div class="sec">
-                <!-- <div class="search">
-                    <h2>Vidvaan Publications Search</h2>
-                </div> -->
-                <div class="qurry">
-                    <div class="ser">
-                        <label for="topic" class="heading">Search</label>
-                        <br>
-                        <input type="text" class="search" id="topic" placeholder="Enter the search topic">
-                        <button class="btn1" onclick="work()"> Search</button>
-                    </div>
-
-                    <!-- Filter and Download controls container, initially hidden -->
-                    <div id="filter-download-container" style="display: none;">
-                        <div class="filter">
-                            <label for="startYear" class="heading">Filter</label>
-                            <br>
-                            <input type="number" class="year" id="startYear" placeholder="Start Year" min="1900"
-                                max="2100" onchange="applyYearFilter()">
-                            <input type="number" class="year" id="endYear" placeholder="End Year" min="1900" max="2100"
-                                onchange="applyYearFilter()">
-                            <button class="btn1" onclick="applyYearFilter()">󰈲 Filter Year</button>
-
-                            <input type="text" id="authorName" class="year" placeholder="Enter author name"
-                                oninput="applyNameFilter()">
-                            <button class="btn1" onclick="applyNameFilter()">󰈲 Filter Name</button>
-                        </div>
-                        <div class="exel">
-                            <label class="heading">Download</label>
-                            <br>
-                            <button class="btn2" onclick="exportExcel()">󰇚 Download Excel</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="nav">
+            <h1>Vidvaan Publications</h1>
+            <button class="btn"><span class="highlight"><br></span>Home</button>
+            <button class="btn"><span class="highlight">‎ ‎ <br> About </button>
+            <button class="btn"> <span class="highlight">‎ ‎ <br>GitHub </button>
         </div>
-
-    </main>
-
-
-
-
-    <div class="container">
-        <div id="publications" class="results">
-            <!-- Results will be displayed here -->
+    </header>
+    <div class="box">
+        <div class="search">
+            <!-- <label for="topic" class="heading">Search</label> -->
+            <input type="text" class="inp" id="topic" placeholder="Enter the search topic">
+            <button class="btn_perm" onclick="work()"> Search</button>
+        </div>
+        <div class="filtr">
+            <input type="number" class="inp_filtr" id="startYear" placeholder="Start Year">
+            <input type="number" class="inp_filtr" id="endYear" placeholder="End Year">
+            <button class="btn_perm" onclick="work()">󰈲 Filter</button>
+        </div>
+        <div class="authr">
+            <input type="text" class="inp_authr" id="authorName" placeholder="Author Name">
+            <button class="btn_perm_authr" onclick="work()">󰈲 Filter Author</button>
+        </div>
+        <div class="download">
+            <!-- <input type="text" class="inp_authr" id="topic" placeholder="Author Name"> -->
+            <button class="btn_perm_authr" onclick="work()">󰇚 Download Excel</button>
         </div>
     </div>
-
-
-
-    <div id="publications" class="container">
-
+    <!-- --------------------------------------- -->
+    <div id="publications" class="results">
+            <!-- Results will be displayed here -->
+    </div>
     </div>
     <script src="output-doc/excel.js"></script>
     <script src="script.js"></script>
@@ -91,6 +50,11 @@
     <script src="repos/dblp.js"></script>
     <script src="repos/openalex.js"></script>
     <script src="repos/openlibrary.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
+    <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 </body>
 
 </html>
