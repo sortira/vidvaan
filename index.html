@@ -2,13 +2,14 @@
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="book-solid.svg" type="image/x-icon">
     <title>Vidvaan</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
     <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
@@ -23,7 +24,7 @@
 <body>
     <header>
         <nav class="nav">
-            <h1>Vidvaan Publications</h1>
+            <h1>Vidvaan Publications  </h1>
         </nav>
         
     </header>
@@ -38,8 +39,8 @@
                     <div class="ser">
                         <label for="topic" class="heading">Search</label>
                         <br>
-                        <input type="text" id="topic" placeholder="Enter the search topic">
-                        <button class="btn1"  onclick="work()">Search</button>
+                        <input type="text" class="search" id="topic" placeholder="Enter the search topic">
+                        <button class="btn1"  onclick="work()"> Search</button>
                         
                     </div>
                     <div class="filter">
@@ -47,12 +48,12 @@
                         <br>
                         <input type="number" class="year" id="startYear" placeholder="Start Year" min="1900" max="2100"onchange="applyYearFilter()">
                         <input type="number" class="year" id="endYear" placeholder="End Year" min="1900" max="2100" onchange="applyYearFilter()">
-                        <button class="btn1" onclick="applyYearFilter()">Filter</button>
+                        <button class="btn1" onclick="applyYearFilter()">󰈲 Filter</button>
                     </div>
                     <div class="exel">
                         <label class="heading">Download</label>
                         <br>
-                        <button class="btn2" onclick="exportExcel()"> Download Excel</button>
+                        <button class="btn2" onclick="exportExcel()">󰇚 Download Excel</button>
                     </div>
                 </div>
             </div>
