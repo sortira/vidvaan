@@ -5,7 +5,7 @@
     font-style: normal;
 }
 
-*{
+* {
     margin: 0;
     padding: 0;
     /* font-family: "/home/asif/proj/vidvaan-testing/FiraCodeNerdFont-Regular.ttf"; */
@@ -19,18 +19,20 @@
 
 }
 
-body{
+body {
     background-color: #000;
     font-family: 'MyCustomFont';
 }
 
-main{
+main {
     background-color: #000;
 }
-.filter{
+
+.filter {
     color: black;
 }
-.nav{
+
+.nav {
     height: 60px;
     font-size: 40px;
     padding: 2%;
@@ -44,7 +46,7 @@ main{
     z-index: 4;
 }
 
-.search{
+.search {
     text-align: left;
     height: 40px;
     font-size: 16px;
@@ -52,7 +54,7 @@ main{
 
 }
 
-.section1{
+.section1 {
     /* padding: 2%; */
 
     margin-top: 100px;
@@ -62,12 +64,12 @@ main{
     /* z-index: 4; */
 }
 
-.heading{
-    font-size: 18px; 
+.heading {
+    font-size: 18px;
     padding: 0 0 0 6px;
 }
 
-.sec{
+.sec {
     background-color: #1f1f1f;
     width: 80%;
     padding-bottom: 1%;
@@ -78,24 +80,24 @@ main{
     border-radius: 1rem;
     height: 150px;
     border: 1px solid white;
-    transition:all 0.2s ease-in;
+    transition: all 0.2s ease-in;
 }
 
-.sec:hover{
+.sec:hover {
     background-color: #333;
     transform: scale(1.01);
 }
 
 
 
-.qurry{
+.qurry {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     padding: 55px;
 }
 
-#topic{
+#topic {
     height: 40px;
     width: 260px;
     border-radius: 0.5rem;
@@ -103,15 +105,15 @@ main{
     color: #000;
 }
 
-#topic:active{
+#topic:active {
     border: 2px solid rgb(227, 94, 53);
 }
 
-#topic:hover{
+#topic:hover {
     border: 2px solid rgb(227, 94, 53);
 }
 
-.btn1{
+.btn1 {
     background-color: rgba(250, 146, 113, 1);
     color: rgba(0, 0, 0, 1);
     height: 44px;
@@ -120,14 +122,14 @@ main{
     border-radius: 0.5rem;
     font-size: 16px;
 
-    
+
 }
 
-.btn1:hover{
+.btn1:hover {
     background-color: rgb(227, 94, 53);
 }
 
-.year{
+.year {
     height: 40px;
     text-align: left;
     width: 120px;
@@ -137,7 +139,7 @@ main{
     padding: 0 0 0 20px;
 }
 
-.btn2{
+.btn2 {
     background-color: rgb(255, 146, 113);
     color: black;
     height: 44px;
@@ -145,22 +147,22 @@ main{
 
     width: 180px;
     border-radius: 0.5rem;
-    
+
 }
 
-.btn2:hover{
+.btn2:hover {
     background-color: rgb(227, 94, 53);
     color: #fff;
 }
 
-.container{
+.container {
     width: 80%;
     margin: 0 10%;
 
     background-color: #000;
 }
 
-#publications{
+#publications {
     /* width: 100%; */
     /* margin: 0 10%; */
     background-color: #1f1f1f;
@@ -168,33 +170,36 @@ main{
     border: 1px solid white;
 }
 
-.results{
+.results {
     text-align: center;
     width: 100%;
 }
 
-.results h2{
+.results h2 {
     padding: 25px;
     font-size: 40px;
 }
-.results p{
+
+.results p {
     padding: 25px;
     font-size: 30px;
 }
+
 .pubs {
     width: 100%;
     /* border: 1px solid white; */
 
 }
-td{
+
+td {
     border: 1px solid white !important;
 }
 
-td:nth-of-type(1n){
+td:nth-of-type(1n) {
     text-align: left !important;
 }
 
-td:nth-of-type(1) a{
+td:nth-of-type(1) a {
     transition: all 1s ease !important;
     padding-bottom: 5px;
 }
@@ -204,61 +209,61 @@ td:nth-of-type(1) a{
 
 
 td:nth-of-type(1) a {
-	color: #fff!important;
-  position: relative !important;
-  text-decoration: none !important;
+    color: #fff !important;
+    position: relative !important;
+    text-decoration: none !important;
 }
 
 td:nth-of-type(1) a::before {
-  content: ''!important;
-  position: absolute!important;
-  width: 100%!important;
-  height: 4px!important;
-  border-radius: 4px!important;
-  background-color: #fff!important;
-  bottom: 0!important;
-  left: 0!important;
-  transform-origin: right!important;
-  transform: scaleX(0)!important;
-  transition: transform .3s ease-in-out!important;
+    content: '' !important;
+    position: absolute !important;
+    width: 100% !important;
+    height: 4px !important;
+    border-radius: 4px !important;
+    background-color: #fff !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    transform-origin: right !important;
+    transform: scaleX(0) !important;
+    transition: transform .3s ease-in-out !important;
 }
 
 td:nth-of-type(1) a:hover::before {
-  transform-origin: left!important;
-  transform: scaleX(1)!important;
+    transform-origin: left !important;
+    transform: scaleX(1) !important;
 }
 
-td:nth-of-type(1) a:hover{
+td:nth-of-type(1) a:hover {
     color: rgb(227, 94, 53) !important;
     /* border-bottom: 2px solid white; */
 }
 
-  
 
 
-td:nth-of-type(2){
+
+td:nth-of-type(2) {
     font-weight: 700;
 }
 
-tr:nth-of-type(1){
+tr:nth-of-type(1) {
     background-color: rgb(227, 94, 53);
 }
 
-th{
+th {
     font-weight: 700 !important;
     border: 2px solid white !important;
 }
 
-th:nth-of-type(1){
+th:nth-of-type(1) {
     border-left: 0px !important;
 }
 
-th:nth-of-type(4){
+th:nth-of-type(4) {
     border-right: 0px !important;
 }
 
-td a{
-    
+td a {
+
     text-decoration: none !important;
 }
 
@@ -266,7 +271,7 @@ td a{
 
 
 
-@media(min-width:559px) and (max-width:880px){
+@media(min-width:559px) and (max-width:880px) {
     .qurry {
         display: flex;
         justify-content: space-evenly;
@@ -276,16 +281,17 @@ td a{
     }
 }
 
-@media(max-width:559px){
-    .nav h1{
+@media(max-width:559px) {
+    .nav h1 {
         font-size: 25px;
     }
+
     .qurry {
         flex-direction: column;
         justify-content: space-evenly;
         align-items: center;
         padding: 25px 0;
-        
+
     }
 
     #topic {
@@ -294,23 +300,108 @@ td a{
         width: 229px;
     }
 
-    .btn1{
+    .btn1 {
         height: 40px;
         margin: 0px 5px;
         width: 258px;
     }
 
-    .year{
+    .year {
         height: 40px;
         margin: 0px 5px 5px;
         width: 98px;
     }
 
-    .sec{
+    .sec {
         height: 335px;
     }
 
-    #publications{
+    #publications {
         overflow: scroll;
+    }
+}
+
+
+/* Enforce the width of the filter-download-container */
+#filter-download-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    /* Ensure the container takes up the full available width */
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    /* Prevent overflow */
+}
+
+/* Adjust the width of the filter and download sections */
+.filter,
+.exel {
+    flex: 1;
+    min-width: 200px;
+    /* Minimum width for each section */
+    box-sizing: border-box;
+    margin: 5px;
+}
+
+/* Inputs and buttons should not overflow */
+.filter input.year,
+.filter input#authorName,
+.filter .btn1,
+.exel .btn2 {
+    width: 100%;
+    /* Make sure the elements take the full width of their parent */
+    max-width: 100%;
+    /* Ensure they don't exceed their container's width */
+    box-sizing: border-box;
+    /* Include padding and borders within the width */
+    margin-bottom: 10px;
+    /* Spacing between elements */
+}
+
+/* Further adjustments for smaller screens */
+@media (max-width: 559px) {
+
+    .filter,
+    .exel {
+        flex: 1 1 100%;
+        /* Ensure each section takes full width on small screens */
+        margin: 5px 0;
+    }
+
+    .qurry {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    #filter-download-container {
+        flex-direction: column;
+        /* Stack elements vertically on small screens */
+    }
+
+    .btn1,
+    .btn2 {
+        width: 100%;
+        /* Ensure buttons are full-width */
+        margin: 5px 0;
+    }
+
+    .year,
+    #authorName {
+        width: 100%;
+        /* Ensure input fields take the full width */
+        margin: 5px 0;
+    }
+
+    .sec {
+        height: auto;
+        /* Adjust the height to prevent overflow */
+    }
+
+    #publications {
+        overflow-x: auto;
+        /* Allow horizontal scroll if content overflows */
     }
 }
