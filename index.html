@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Vidvaan Publications</title>
     <link rel="stylesheet" href="style.css">
     <!-- <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> -->
 </head>
@@ -25,24 +25,29 @@
             <button class="btn_perm" onclick="work()"> Search</button>
         </div>
         <div class="filtr">
-            <input type="number" class="inp_filtr" id="startYear" placeholder="Start Year">
-            <input type="number" class="inp_filtr" id="endYear" placeholder="End Year">
-            <button class="btn_perm" onclick="work()">󰈲 Filter</button>
+            <input type="number" class="inp_filtr" onchange="applyYearFilter()" id="startYear" placeholder="Start Year">
+            <input type="number" class="inp_filtr" onchange="applyYearFilter()" id="endYear" placeholder="End Year">
+            <button class="btn_perm" onclick="applyYearFilter()">󰈲 Filter</button>
         </div>
         <div class="authr">
             <input type="text" class="inp_authr" id="authorName" placeholder="Author Name">
-            <button class="btn_perm_authr" onclick="work()">󰈲 Filter Author</button>
+            <button class="btn_perm_authr" onclick="applyNameFilter()">󰈲 Filter Author</button>
         </div>
         <div class="download">
             <!-- <input type="text" class="inp_authr" id="topic" placeholder="Author Name"> -->
-            <button class="btn_perm_authr" onclick="work()">󰇚 Download Excel</button>
+            <button class="btn_perm_authr" onclick="exportExcel()">󰇚 Download Excel</button>
         </div>
     </div>
     <!-- --------------------------------------- -->
     <div id="publications" class="results">
-            <!-- Results will be displayed here -->
+        <!-- Results will be displayed here -->
     </div>
+
+    <!-- Add missing filter and download container -->
+    <div id="filter-download-container" style="display: none;">
+        <!-- Content for filter and download controls -->
     </div>
+
     <script src="output-doc/excel.js"></script>
     <script src="script.js"></script>
     <script src="filters/filter.js"></script>
@@ -55,7 +60,6 @@
     <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
     <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-    <script src=" https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.min.js "></script>
 </body>
 
 </html>
