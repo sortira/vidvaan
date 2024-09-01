@@ -52,7 +52,11 @@
                                 max="2100" onchange="applyYearFilter()">
                             <input type="number" class="year" id="endYear" placeholder="End Year" min="1900" max="2100"
                                 onchange="applyYearFilter()">
-                            <button class="btn1" onclick="applyYearFilter()">󰈲 Filter</button>
+                            <button class="btn1" onclick="applyYearFilter()">󰈲 Filter Year</button>
+
+                            <input type="text" id="authorName" class="year" placeholder="Enter author name"
+                                oninput="applyNameFilter()">
+                            <button class="btn1" onclick="applyNameFilter()">󰈲 Filter Name</button>
                         </div>
                         <div class="exel">
                             <label class="heading">Download</label>
@@ -83,6 +87,7 @@
     <script src="output-doc/excel.js"></script>
     <script src="script.js"></script>
     <script src="filters/yearFilter.js"></script>
+    <script src="filters/nameFilter.js"></script>
     <script src="repos/arxiv.js"></script>
     <script src="repos/dblp.js"></script>
     <script src="repos/openalex.js"></script>
