@@ -38,6 +38,7 @@ async function work() {
         for (let fetchPromise of fetchFunctions) {
             const results = await fetchPromise;
             publications.push(...results);
+            originalPublications.push(...results);
             // Display partial results
             displayPublications(publications);
         }
@@ -272,10 +273,36 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
         return;
     }
 
+    // Calculate pagination
+    const totalPages = Math.ceil(publications.length / rowsPerPage);
     const startIndex = (currentPage - 1) * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
     const paginatedPublications = publications.slice(startIndex, endIndex);
 
+    // Create pagination controls
+    const paginationControls = document.createElement('div');
+    paginationControls.className = 'pagination-controls';
+    paginationControls.style.display = 'flex';
+    paginationControls.style.justifyContent = 'center';
+    paginationControls.style.marginBottom = '10px'; // Add some space between the pagination and the table
+
+    for (let i = 1; i <= totalPages; i++) {
+        const pageButton = document.createElement('button');
+        pageButton.textContent = i;
+        pageButton.style.margin = '5px 5px';
+        pageButton.style.minWidth = '40px'; // Set a minimum width for the buttons
+        pageButton.style.padding = '10px 10px'; // Add padding for better spacing
+        pageButton.style.border = i === currentPage ? '3px solid #000000' : 'none'; // Highlight active page
+        pageButton.style.backgroundColor = i === currentPage ? 'rgb(227, 94, 53)' : 'rgba(227, 94, 53, 0.7)'; // Highlight active page
+        pageButton.style.color = '#fff'; // Set text color
+        pageButton.addEventListener('click', () => displayPublications(publications, i, rowsPerPage));
+        paginationControls.appendChild(pageButton);
+    }
+
+    // Append pagination controls to the publication container
+    publicationContainer.appendChild(paginationControls);
+
+    // Create the table
     const table = document.createElement('table');
     table.className = 'pubs';
     table.style.borderCollapse = 'collapse';
@@ -346,45 +373,55 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
         table.appendChild(row);
     });
 
+    // Append the table to the publication container
     publicationContainer.appendChild(table);
-
-    // Add vertical pagination controls on the right side
-    if (publications.length > rowsPerPage) {
-        const paginationControls = document.createElement('div');
-        paginationControls.className = 'pagination-controls';
-        paginationControls.style.position = 'fixed';
-        paginationControls.style.right = '10px';
-        paginationControls.style.top = '50%';
-        paginationControls.style.transform = 'translateY(-50%)';
-        paginationControls.style.display = 'flex';
-        paginationControls.style.flexDirection = 'column';
-
-        const totalPages = Math.ceil(publications.length / rowsPerPage);
-
-        for (let i = 1; i <= totalPages; i++) {
-            const pageButton = document.createElement('button');
-            pageButton.textContent = i;
-            pageButton.style.margin = '2px';
-            pageButton.style.border = i === currentPage ? '3px solid #000000' : 'none'; // Add border to the active page
-            pageButton.style.backgroundColor = i === currentPage ? '#007bff' : '#3C7398'; // Highlight the active page
-            pageButton.addEventListener('click', () => displayPublications(publications, i, rowsPerPage));
-            paginationControls.appendChild(pageButton);
-        }
-
-        publicationContainer.appendChild(paginationControls);
-    }
 }
 
 
 
 
 
+
 function exportExcel() {
-    $('.pubs').table2excel({
+    /*
+    $('.sortable').table2excel({
         exclude: ".no-export",
-        filename: "Vidvaan Report on " + document.getElementById("topic").value.trim() + ".xls",
+        filename: "download.xls",
         fileext: ".xls",
         exclude_links: false,
         exclude_inputs: true
     });
+    */
+    
+    
+    //console.log(pubarr);
+    //console.log(originalPublications);
+    const pubarr = originalPublications.map((obj)=>{return Object.keys(obj).map((key)=>{return obj[key];});});
+    var wb = XLSX.utils.book_new();
+    wb.Props
+    {
+        Title:"Vidvaan Report";
+        Subject:"Report";
+        Author:"Team Vidvaan";
+        
+    }
+    wb.SheetNames.push("Report Sheet");
+    pubarr.unshift(["Name     ","Year    ","Authors        ","Link             ","Academic Database"])
+    wb.Sheets["Report Sheet"] = XLSX.utils.aoa_to_sheet(pubarr);
+    var wbout = XLSX.write(wb,{booktype:'xlsx',type:'binary'});
+    saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'Vidvaan Report.xlsx');
+
+}
+function convertToArray(tup)
+{
+    var Arr = Object.keys(tup).map(
+        (key) => tup[key]);
+    return Arr;
+}
+
+function s2ab(s) { 
+    var buf = new ArrayBuffer(s.length); //convert s to arrayBuffer
+    var view = new Uint8Array(buf);  //create uint8array as viewer
+    for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; //convert to octet
+    return buf;    
 }
