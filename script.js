@@ -2,15 +2,14 @@
 let debounceTimeout;
 let originalPublications = [];
 
-
 document.getElementById("topic").addEventListener("input", () => {
     clearTimeout(debounceTimeout);
     debounceTimeout = setTimeout(() => {
-        work();
+        searchPublications();
     }, 500); // Wait for 500ms before triggering the search
 });
 
-async function work() {
+async function searchPublications() {
     const topic = document.getElementById("topic").value.trim();
     const publicationContainer = document.getElementById('publications');
 
@@ -20,28 +19,25 @@ async function work() {
         return;
     }
 
-    const publications = [];
-
     // Clear the previous results
     publicationContainer.innerHTML = "<h2>Loading...</h2>";
 
     try {
         // Fetch from all sources in parallel
-        const fetchFunctions = [dblp(topic), arxiv(topic), openalex(topic), openLibrary(topic)];
+        const [dblpResults, arxivResults, openalexResults] = await Promise.all([
+            dblp(topic),
+            arxiv(topic),
+            openalex(topic)
+        ]);
 
-        for (let fetchPromise of fetchFunctions) {
-            const results = await fetchPromise;
-            publications.push(...results);
-            originalPublications.push(...results);
-            // Display partial results
-            displayPublications(publications);
-        }
+        // Combine results from all sources
+        const publications = [...dblpResults, ...arxivResults, ...openalexResults];
 
         // Store publications globally to manage pagination
-        originalPublications = publications.slice(); // Store a copy of the original publications
+        originalPublications = [...publications]; // Store a copy of the original publications
         window.publications = publications;
 
-        // Final display with all results
+        // Display all results
         displayPublications(publications);
 
         // Show filter and download controls after data is loaded
@@ -60,10 +56,10 @@ async function work() {
  */
 function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
     const publicationContainer = document.getElementById('publications');
-    publicationContainer.innerHTML = "<h2>Search Results</h2>";
+    publicationContainer.innerHTML = "";  // Clear the container initially
 
     if (publications.length === 0) {
-        publicationContainer.innerHTML += "<p>No publications found for this topic.</p>";
+        publicationContainer.innerHTML = "<h2>Search Results</h2><p>No publications found for this topic.</p>";
         return;
     }
 
@@ -73,69 +69,74 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
     const endIndex = startIndex + rowsPerPage;
     const paginatedPublications = publications.slice(startIndex, endIndex);
 
-    // Create pagination controls
+    // Create and append pagination controls
+    const paginationControls = buildPaginationControls(totalPages, currentPage, publications, rowsPerPage);
+    publicationContainer.appendChild(paginationControls);
+
+    // Create and append the publications table
+    const table = buildPublicationsTable(paginatedPublications);
+    publicationContainer.appendChild(table);
+}
+
+/**
+ * Builds the pagination controls.
+ * @function buildPaginationControls
+ * @param {number} totalPages - Total number of pages.
+ * @param {number} currentPage - The current page number.
+ * @param {Array} publications - The array of publications.
+ * @param {number} rowsPerPage - The number of rows to display per page.
+ * @returns {HTMLElement} The pagination controls container.
+ */
+function buildPaginationControls(totalPages, currentPage, publications, rowsPerPage) {
     const paginationControls = document.createElement('div');
     paginationControls.className = 'pagination-controls';
     paginationControls.style.display = 'flex';
     paginationControls.style.justifyContent = 'center';
-    paginationControls.style.marginBottom = '10px'; // Add some space between the pagination and the table
+    paginationControls.style.marginBottom = '10px';
 
     for (let i = 1; i <= totalPages; i++) {
         const pageButton = document.createElement('button');
         pageButton.textContent = i;
-        pageButton.style.margin = '5px 5px';
-        pageButton.style.minWidth = '40px'; // Set a minimum width for the buttons
-        pageButton.style.padding = '10px 10px'; // Add padding for better spacing
-        pageButton.style.border = i === currentPage ? '3px solid #000000' : 'none'; // Highlight active page
-        pageButton.style.backgroundColor = i === currentPage ? 'rgb(227, 94, 53)' : 'rgba(227, 94, 53, 0.7)'; // Highlight active page
-        pageButton.style.color = '#fff'; // Set text color
+        pageButton.style.margin = '5px';
+        pageButton.style.minWidth = '40px';
+        pageButton.style.padding = '10px';
+        pageButton.style.border = i === currentPage ? '3px solid #000000' : 'none';
+        pageButton.style.backgroundColor = i === currentPage ? 'rgb(227, 94, 53)' : 'rgba(227, 94, 53, 0.7)';
+        pageButton.style.color = '#fff';
         pageButton.addEventListener('click', () => displayPublications(publications, i, rowsPerPage));
         paginationControls.appendChild(pageButton);
     }
 
-    // Append pagination controls to the publication container
-    publicationContainer.appendChild(paginationControls);
+    return paginationControls;
+}
 
-    // Create the table
+/**
+ * Builds the publications table.
+ * @function buildPublicationsTable
+ * @param {Array} publications - The array of publications to display in the table.
+ * @returns {HTMLElement} The table element containing publication data.
+ */
+function buildPublicationsTable(publications) {
     const table = document.createElement('table');
     table.className = 'pubs';
     table.style.borderCollapse = 'collapse';
 
     const headerRow = document.createElement('tr');
+    ['Title', 'Year', 'Authors', 'Academic Database'].forEach(text => {
+        const header = document.createElement('th');
+        header.textContent = text;
+        header.style.border = '1px solid black';
+        header.style.padding = '8px';
+        header.style.textAlign = 'left';
+        headerRow.appendChild(header);
+    });
 
-    const titleHeader = document.createElement('th');
-    titleHeader.textContent = 'Title';
-    titleHeader.style.border = '1px solid black';
-    titleHeader.style.padding = '8px';
-    titleHeader.style.textAlign = 'left';
-
-    const yearHeader = document.createElement('th');
-    yearHeader.textContent = 'Year';
-    yearHeader.style.border = '1px solid black';
-    yearHeader.style.padding = '8px';
-    yearHeader.style.textAlign = 'left';
-
-    const authorsHeader = document.createElement('th');
-    authorsHeader.textContent = 'Authors';
-    authorsHeader.style.border = '1px solid black';
-    authorsHeader.style.padding = '8px';
-    authorsHeader.style.textAlign = 'left';
-
-    const repoHeader = document.createElement('th');
-    repoHeader.textContent = 'Academic Database';
-    repoHeader.style.border = '1px solid black';
-    repoHeader.style.padding = '8px';
-    repoHeader.style.textAlign = 'left';
-
-    headerRow.appendChild(titleHeader);
-    headerRow.appendChild(yearHeader);
-    headerRow.appendChild(authorsHeader);
-    headerRow.appendChild(repoHeader);
     table.appendChild(headerRow);
 
-    paginatedPublications.forEach(pub => {
+    publications.forEach(pub => {
         const row = document.createElement('tr');
 
+        // Create title cell with a link
         const titleCell = document.createElement('td');
         const link = document.createElement('a');
         link.href = pub.url;
@@ -145,21 +146,25 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
         titleCell.style.border = '1px solid black';
         titleCell.style.padding = '8px';
 
+        // Create year cell
         const yearCell = document.createElement('td');
         yearCell.textContent = pub.year;
         yearCell.style.border = '1px solid black';
         yearCell.style.padding = '8px';
 
+        // Create authors cell
         const authorsCell = document.createElement('td');
         authorsCell.textContent = pub.authors;
         authorsCell.style.border = '1px solid black';
         authorsCell.style.padding = '8px';
 
+        // Create repository cell
         const repoCell = document.createElement('td');
         repoCell.textContent = pub.repo;
         repoCell.style.border = '1px solid black';
         repoCell.style.padding = '8px';
 
+        // Append cells to the row
         row.appendChild(titleCell);
         row.appendChild(yearCell);
         row.appendChild(authorsCell);
@@ -167,6 +172,5 @@ function displayPublications(publications, currentPage = 1, rowsPerPage = 50) {
         table.appendChild(row);
     });
 
-    // Append the table to the publication container
-    publicationContainer.appendChild(table);
+    return table;
 }
