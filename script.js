@@ -27,7 +27,7 @@ async function work() {
 
     try {
         // Fetch from all sources in parallel
-        const fetchFunctions = [dblp(topic), arxiv(topic), openalex(topic), openLibrary(topic)];
+        const fetchFunctions = [dblp(topic), arxiv(topic), openalex(topic)];
 
         for (let fetchPromise of fetchFunctions) {
             const results = await fetchPromise;
