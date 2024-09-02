@@ -21,7 +21,7 @@ Welcome to **Vidvaan**! A comprehensive web application that consolidates academ
   - OpenLibrary
   - OpenAlex
 - **External Libraries**:
-  - `jquery.table2excel`: For exporting HTML tables to Excel files.
+  - `SheetJS`: For exporting HTML tables to Excel files.
 
 ## 🚀 Getting Started
 
