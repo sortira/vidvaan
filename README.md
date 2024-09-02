@@ -61,7 +61,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## ⭐ Acknowledgments
 
-- Thanks to the developers of the APIs and libraries used in this project.
+- Thanks to the developers of the APIs, academic databases and libraries used in this project.
+
+  - DBLP
+  - ArXiv
+  - OpenLibrary
+  - OpenAlex
 
 # Nerd Fonts
 
