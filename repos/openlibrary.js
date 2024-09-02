@@ -1,5 +1,5 @@
 /**
- * Fetches publications from OpenLibrary API based on the provided topic.
+ * Fetches publications from OpenLibrary API based on the provided topic.[Obsolete due to slow response times of OpenLibrary, fix needed to limit response time]
  * @async
  * @function openLibrary
  * @param {string} topic - The search topic.
