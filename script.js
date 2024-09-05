@@ -174,3 +174,55 @@ function buildPublicationsTable(publications) {
 
     return table;
 }
+
+async function getAI() {
+    if (window.publications.length === 0) {
+        alert("No publications to summarize.");
+        return;
+    }
+
+    // Extract the titles of all publications to send as the summaries field
+    const summaries = window.publications.map(pub => pub.title);
+
+    try {
+        // Make the POST request to /summarise endpoint
+        const response = await fetch('http://127.0.0.1:5000/summarise', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ summaries })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.statusText}`);
+        }
+
+        // Parse the JSON response
+        const data = await response.json();
+
+        // Display the summary in the UI
+        displayAISummary(data.summary);
+    } catch (error) {
+        console.error("Error fetching AI summary:", error);
+        alert("There was an error generating the AI summary. Please try again later.");
+    }
+}
+
+/**
+ * Displays the AI-generated summary in the UI.
+ * @param {string} summary - The AI-generated summary to display.
+ */
+function displayAISummary(summary) {
+    const aiSummaryContainer = document.getElementById('ai-summary');
+    console.log("SUMMARY : " + summary)
+    if (!aiSummaryContainer) {
+        console.error("AI Summary container not found!");
+        return;
+    }
+
+    aiSummaryContainer.innerHTML = `
+        <h2>AI-Generated Summary</h2>
+        <p>${summary}</p>
+    `;
+}

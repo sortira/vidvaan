@@ -18,11 +18,20 @@ async function openalex(topic) {
 
         const data = await response.json();
         data.results.forEach(work => {
+            const title = work.title;
+            const year = work.publication_year;
+            const authors = work.authorships.map(authorship => authorship.author.display_name).join(', ');
+            const url = work.id;
+
+            // Generate a simple summary based on the title, authors, and year
+            const summary = `This publication titled "${title}" was authored by ${authors} and published in ${year}.`;
+
             publications.push({
-                title: work.title,
-                year: work.publication_year,
-                authors: work.authorships.map(authorship => authorship.author.display_name).join(', '),
-                url: work.id,
+                title: title,
+                year: year,
+                authors: authors,
+                url: url,
+                summary: summary, // Add the generated summary
                 repo: 'OpenAlex'
             });
         });

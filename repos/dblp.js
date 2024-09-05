@@ -29,11 +29,15 @@ async function dblp(topic) {
                 }
             }
 
+            // Generate a simple summary based on the title and authors
+            const summary = `This paper titled "${paper.info.title}" was authored by ${authors} and published in ${paper.info.year}.`;
+
             publications.push({
                 title: paper.info.title,
                 year: paper.info.year,
                 authors: authors,
                 url: paper.info.url,
+                summary, // Add the generated summary
                 repo: 'DBLP'
             });
         });

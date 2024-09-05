@@ -25,12 +25,14 @@ async function arxiv(topic) {
             const year = new Date(publishedDate).getFullYear();
             const url = entry.getElementsByTagName("id")[0].textContent.trim();
             const authors = Array.from(entry.getElementsByTagName("author")).map(author => author.getElementsByTagName("name")[0].textContent).join(', ');
+            const summary = entry.getElementsByTagName("summary")[0].textContent.trim();
 
             publications.push({
                 title,
                 year,
                 authors,
                 url,
+                summary, // Added summary field
                 repo: 'ArXiv'
             });
         }
