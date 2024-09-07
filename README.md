@@ -52,12 +52,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 💻 Author
 
-- **Aritro Shome** - [GitHub](https://github.com/sortira) *** Contribution: Back-End***
-- **SK Asif Tanvir** - [GitHub](https://github.com/Asif-Tanvir-2006) *** Contribution: Front-End and Hosting The Repository***
-- **Sagnik** *** Contribution: UI/UX Design***
-- **Prayas Sinha** *** Contribution: Exporting The Data To Excel and Word Files***
-- **Ahana Pal** *** Contribution: Documentation***
-- **Debjani Mondal** *** Contribution: Graphics, Logo And Roster Design***
+- **Aritro Shome** - [GitHub](https://github.com/sortira) ***Contribution: Back-End***
+- **SK Asif Tanvir** - [GitHub](https://github.com/Asif-Tanvir-2006) ***Contribution: Front-End and Hosting The Repository***
+- **Sagnik** ***Contribution: UI/UX Design***
+- **Prayas Sinha** ***Contribution: Exporting The Data To Excel and Word Files***
+- **Ahana Pal** ***Contribution: Documentation***
+- **Debjani Mondal** ***Contribution: Graphics, Logo And Roster Design***
 
 ## ⭐ Acknowledgments
 
@@ -65,7 +65,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
   - DBLP
   - ArXiv
-  - OpenLibrary
   - OpenAlex
 
 # Nerd Fonts
