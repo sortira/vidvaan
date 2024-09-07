@@ -1,6 +1,7 @@
 // Debounce function to limit the frequency of search calls
 let debounceTimeout;
 let originalPublications = [];
+window.serverlink = "http://localhost:5000"
 
 document.getElementById("topic").addEventListener("input", () => {
     clearTimeout(debounceTimeout);
@@ -186,7 +187,7 @@ async function getAI() {
 
     try {
         // Make the POST request to /summarise endpoint
-        const response = await fetch('https://thatasifwhodevelopsweb.pythonanywhere.com/summarise', {
+        const response = await fetch(window.serverlink + '/summarise', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
