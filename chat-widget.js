@@ -131,7 +131,7 @@
 
         try {
             // Fetch reply from the API endpoint
-            const response = await fetch(`http://localhost:5000/chat?message=${encodeURIComponent(message)}`);
+            const response = await fetch(`https://thatasifwhodevelopsweb.pythonanywhere.com/chat?message=${encodeURIComponent(message)}`);
             if (!response.ok) {
                 throw new Error(`Error: ${response.statusText}`);
             }
