@@ -1,3 +1,4 @@
+
 function exportArrayToWord(arrayOfArray,col){
     var header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
          "xmlns:w='urn:schemas-microsoft-com:office:word' "+
@@ -49,4 +50,3 @@ function exportWord()
      pubarr.unshift(["Name     ", "Year    ", "Authors        ", "Link             ", "Summary   ","Academic Database"]);
      exportArrayToWord(pubarr,6);
 }
-
