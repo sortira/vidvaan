@@ -1,163 +1,163 @@
 (function () {
-    document.head.insertAdjacentHTML('beforeend', '<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.16/tailwind.min.css" rel="stylesheet">');
+  document.head.insertAdjacentHTML('beforeend', '<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.16/tailwind.min.css" rel="stylesheet">');
 
-    // Inject the CSS
-    const style = document.createElement('style');
-    style.innerHTML = `
-    .hidden {
-      display: none;
+  // Inject the CSS
+  const style = document.createElement('style');
+  style.innerHTML = `
+  .hidden {
+    display: none;
+  }
+  #chat-widget-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    flex-direction: column;
+  }
+  #chat-popup {
+    height: 70vh;
+    max-height: 70vh;
+    transition: all 0.3s;
+    overflow: hidden;
+    background-color: #101010;
+  }
+  #chat-input {
+      color: black; /* Set text color to black */
+      background-color: white; /* Optional: Ensure background is white for contrast */
     }
-    #chat-widget-container {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      flex-direction: column;
-    }
+  @media (max-width: 768px) {
     #chat-popup {
-      height: 70vh;
-      max-height: 70vh;
-      transition: all 0.3s;
-      overflow: hidden;
-      background-color: white;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      max-height: 100%;
+      border-radius: 0;
     }
-    #chat-input {
-        color: black; /* Set text color to black */
-        background-color: white; /* Optional: Ensure background is white for contrast */
-      }
-    @media (max-width: 768px) {
-      #chat-popup {
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        max-height: 100%;
-        border-radius: 0;
-      }
-    }
-    `;
+  }
+  `;
 
-    document.head.appendChild(style);
+  document.head.appendChild(style);
 
-    // Create chat widget container
-    const chatWidgetContainer = document.createElement('div');
-    chatWidgetContainer.id = 'chat-widget-container';
-    document.body.appendChild(chatWidgetContainer);
+  // Create chat widget container
+  const chatWidgetContainer = document.createElement('div');
+  chatWidgetContainer.id = 'chat-widget-container';
+  document.body.appendChild(chatWidgetContainer);
 
-    // Inject the HTML
-    chatWidgetContainer.innerHTML = `
-      <div id="chat-bubble" class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center cursor-pointer text-3xl">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-        </svg>
+  // Inject the HTML
+  chatWidgetContainer.innerHTML = `
+    <div style="border: 2px solid white;background-color:#e8310a"id="chat-bubble" class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center cursor-pointer text-3xl">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+      </svg>
+    </div>
+    <div style="width: 500px;border: 2px solid white;background-color:black" id="chat-popup" class="hidden absolute bottom-20 right-0 w-96 bg-white rounded-md shadow-md flex flex-col transition-all text-sm">
+      <div style="background-color:#e8310a" id="chat-header" class="flex justify-between items-center p-4 bg-gray-800 text-white rounded-t-md">
+        <h3 class="m-0 text-lg">AI Helper Chat</h3>
+        <button id="close-popup" class="bg-transparent border-none text-white cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
-      <div id="chat-popup" class="hidden absolute bottom-20 right-0 w-96 bg-white rounded-md shadow-md flex flex-col transition-all text-sm">
-        <div id="chat-header" class="flex justify-between items-center p-4 bg-gray-800 text-white rounded-t-md">
-          <h3 class="m-0 text-lg">AI Helper Chat</h3>
-          <button id="close-popup" class="bg-transparent border-none text-white cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+      <div id="chat-messages" class="flex-1 p-4 overflow-y-auto"></div>
+      <div id="chat-input-container" class="p-4 border-t border-gray-200">
+        <div class="flex space-x-4 items-center">
+          <input type="text" style="color: black;font-size: 15px; font-weight:700"id="chat-input" class="flex-1 border border-gray-300 rounded-md px-4 py-2 outline-none" placeholder="Type your message...">
+          <button style="border: 2px solid white;background-color:#e8310a"id="chat-submit" class="bg-gray-800 text-white rounded-md px-4 py-2 cursor-pointer">Send</button>
         </div>
-        <div id="chat-messages" class="flex-1 p-4 overflow-y-auto"></div>
-        <div id="chat-input-container" class="p-4 border-t border-gray-200">
-          <div class="flex space-x-4 items-center">
-            <input type="text" id="chat-input" class="flex-1 border border-gray-300 rounded-md px-4 py-2 outline-none" placeholder="Type your message...">
-            <button id="chat-submit" class="bg-gray-800 text-white rounded-md px-4 py-2 cursor-pointer">Send</button>
+      </div>
+    </div>
+  `;
+
+  // Add event listeners
+  const chatInput = document.getElementById('chat-input');
+  const chatSubmit = document.getElementById('chat-submit');
+  const chatMessages = document.getElementById('chat-messages');
+  const chatBubble = document.getElementById('chat-bubble');
+  const chatPopup = document.getElementById('chat-popup');
+  const closePopup = document.getElementById('close-popup');
+
+  chatSubmit.addEventListener('click', function () {
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      chatInput.value = '';
+
+      onUserRequest(message);
+  });
+
+  chatInput.addEventListener('keyup', function (event) {
+      if (event.key === 'Enter') {
+          chatSubmit.click();
+      }
+  });
+
+  chatBubble.addEventListener('click', function () {
+      togglePopup();
+  });
+
+  closePopup.addEventListener('click', function () {
+      togglePopup();
+  });
+
+  function togglePopup() {
+      chatPopup.classList.toggle('hidden');
+      if (!chatPopup.classList.contains('hidden')) {
+          chatInput.focus();
+      }
+  }
+
+  async function onUserRequest(message) {
+      // Handle user request here
+      console.log('User request:', message);
+
+      // Display user message
+      const messageElement = document.createElement('div');
+      messageElement.className = 'flex justify-end mb-3';
+      messageElement.innerHTML = `
+          <div class="bg-gray-800 text-white rounded-lg py-2 px-4 max-w-[70%]" style="max-width: 80%; padding: 10px;font-size: 17px;background-color: #1f1f1f; border: 2px solid white">
+            ${message}
           </div>
-        </div>
-      </div>
-    `;
+      `;
+      chatMessages.appendChild(messageElement);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    // Add event listeners
-    const chatInput = document.getElementById('chat-input');
-    const chatSubmit = document.getElementById('chat-submit');
-    const chatMessages = document.getElementById('chat-messages');
-    const chatBubble = document.getElementById('chat-bubble');
-    const chatPopup = document.getElementById('chat-popup');
-    const closePopup = document.getElementById('close-popup');
+      chatInput.value = '';
 
-    chatSubmit.addEventListener('click', function () {
-        const message = chatInput.value.trim();
-        if (!message) return;
+      try {
+          // Fetch reply from the API endpoint
+          const response = await fetch(window.serverlink + `/chat?message=${encodeURIComponent(message)}`);
+          if (!response.ok) {
+              throw new Error(`Error: ${response.statusText}`);
+          }
 
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+          // Parse the response JSON
+          const data = await response.json();
 
-        chatInput.value = '';
+          // Call the reply function with the response text
+          reply(data.reply); // Assuming the API response has a 'reply' field
 
-        onUserRequest(message);
-    });
+      } catch (error) {
+          console.error('Error fetching reply:', error);
+          reply('Sorry, there was an error fetching the reply.');
+      }
+  }
 
-    chatInput.addEventListener('keyup', function (event) {
-        if (event.key === 'Enter') {
-            chatSubmit.click();
-        }
-    });
-
-    chatBubble.addEventListener('click', function () {
-        togglePopup();
-    });
-
-    closePopup.addEventListener('click', function () {
-        togglePopup();
-    });
-
-    function togglePopup() {
-        chatPopup.classList.toggle('hidden');
-        if (!chatPopup.classList.contains('hidden')) {
-            chatInput.focus();
-        }
-    }
-
-    async function onUserRequest(message) {
-        // Handle user request here
-        console.log('User request:', message);
-
-        // Display user message
-        const messageElement = document.createElement('div');
-        messageElement.className = 'flex justify-end mb-3';
-        messageElement.innerHTML = `
-            <div class="bg-gray-800 text-white rounded-lg py-2 px-4 max-w-[70%]">
-              ${message}
-            </div>
-        `;
-        chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-
-        chatInput.value = '';
-
-        try {
-            // Fetch reply from the API endpoint
-            const response = await fetch(window.serverlink + `/chat?message=${encodeURIComponent(message)}`);
-            if (!response.ok) {
-                throw new Error(`Error: ${response.statusText}`);
-            }
-
-            // Parse the response JSON
-            const data = await response.json();
-
-            // Call the reply function with the response text
-            reply(data.reply); // Assuming the API response has a 'reply' field
-
-        } catch (error) {
-            console.error('Error fetching reply:', error);
-            reply('Sorry, there was an error fetching the reply.');
-        }
-    }
-
-    function reply(message) {
-        const chatMessages = document.getElementById('chat-messages');
-        const replyElement = document.createElement('div');
-        replyElement.className = 'flex mb-3';
-        replyElement.innerHTML = `
-            <div class="bg-gray-200 text-black rounded-lg py-2 px-4 max-w-[70%]">
-              ${message}
-            </div>
-        `;
-        chatMessages.appendChild(replyElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
+  function reply(message) {
+      const chatMessages = document.getElementById('chat-messages');
+      const replyElement = document.createElement('div');
+      replyElement.className = 'flex mb-3';
+      replyElement.innerHTML = `
+          <div class="text-white rounded-lg py-2 px-4 max-w-[70%]" style="max-width: 80%;padding: 10px;background-color: #e8310a; font-size: 17px;font-weight: 700; border: 2px solid white;">
+            ${message}
+          </div>
+      `;
+      chatMessages.appendChild(replyElement);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
 })();

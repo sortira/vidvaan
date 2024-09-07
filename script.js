@@ -1,7 +1,7 @@
 // Debounce function to limit the frequency of search calls
 let debounceTimeout;
 let originalPublications = [];
-window.serverlink = "http://localhost:5000"
+window.serverlink = "https://thatasifwhodevelopsweb.pythonanywhere.com/"
 
 document.getElementById("topic").addEventListener("input", () => {
     clearTimeout(debounceTimeout);
