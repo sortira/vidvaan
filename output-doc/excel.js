@@ -22,7 +22,7 @@ function exportExcel() {
 
     }
     wb.SheetNames.push("Report Sheet");
-    pubarr.unshift(["Name     ", "Year    ", "Authors        ", "Link             ", "Academic Database"])
+    pubarr.unshift(["Name     ", "Year    ", "Authors        ", "Link             ", "Summary   ","Academic Database"]);
     var ws = XLSX.utils.aoa_to_sheet(pubarr);
     //change width of columns
     var wscols = [{wch:50},{wch:10},{wch:60},{wch:50},{wch:20}];

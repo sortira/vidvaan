@@ -1,6 +1,7 @@
 // Debounce function to limit the frequency of search calls
 let debounceTimeout;
 let originalPublications = [];
+let aiSumText = " ";
 window.serverlink = "https://thatasifwhodevelopsweb.pythonanywhere.com/"
 
 document.getElementById("topic").addEventListener("input", () => {
@@ -217,6 +218,7 @@ async function getAI() {
 function displayAISummary(summary) {
     const aiSummaryContainer = document.getElementById('ai-summary');
     console.log("SUMMARY : " + summary)
+    aiSumText = summary;
     if (!aiSummaryContainer) {
         console.error("AI Summary container not found!");
         return;
