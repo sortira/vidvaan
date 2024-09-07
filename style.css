@@ -221,6 +221,7 @@ body {
 
 .btn_perm_authr {
     /* all: unset; */
+        margin-right: 10px;
 
     /* height: 45px; */
     /* width: 180px; */
