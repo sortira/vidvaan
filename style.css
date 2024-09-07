@@ -50,6 +50,17 @@ body {
     border: 2px solid white;
     border-radius: 20px;
 }
+.box_ai {
+    padding: 2%;
+    font-size: 1.3rem;
+    background-color: #1f1f1f;
+    text-align: center;
+    width: 75%;
+    margin: 0 auto;
+    margin-top: 30px;
+    border: 2px solid white;
+    border-radius: 20px;
+}
 .results {
     background-color: #1f1f1f;
     text-align: center;
@@ -129,6 +140,7 @@ body {
     width: 180px;
     padding: 1% 1%;
     border: 0px transparent;
+    margin-bottom: 20px;
     border-radius: 10px;
     font-weight: 700;
     /* margin-top: 45px; */
