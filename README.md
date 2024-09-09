@@ -1,3 +1,5 @@
+(https://github.com/sortira/vidvaan/blob/main/logo_.png)
+
 # 📚 Vidvaan
 
 Welcome to **Vidvaan**! A comprehensive web application that consolidates academic publications from multiple sources like DBLP, ArXiv, OpenLibrary, and OpenAlex, all in one place. Easily search, view, and download results as an Excel file. 🚀
