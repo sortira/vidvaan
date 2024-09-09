@@ -1,4 +1,4 @@
-(https://github.com/sortira/vidvaan/blob/main/logo_.png)
+![Vidvaan Logo and Image ](https://github.com/sortira/vidvaan/blob/main/logo_.png)
 
 # 📚 Vidvaan
 
