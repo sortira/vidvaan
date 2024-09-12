@@ -227,6 +227,7 @@ th {
     .box,
     .box_ai,
     .results {
+        padding: 20px;
         width: 95%;
     }
 
