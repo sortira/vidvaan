@@ -163,7 +163,6 @@ th {
 
 /* Mobile responsiveness */
 @media only screen and (max-width: 800px) {
-
     .inp_filtr, .inp_authr {
         color: black;
         padding: 10px;
@@ -176,9 +175,6 @@ th {
     .nav {
         font-size: 1rem;
         padding: 10px;
-        padding-left: 0;
-        padding-right: 0;
-        
     }
 
     .header {
@@ -231,7 +227,7 @@ th {
     .box,
     .box_ai,
     .results {
-        width: 90%;
+        width: 95%;
     }
 
     table {
