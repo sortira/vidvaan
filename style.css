@@ -163,12 +163,7 @@ th {
 
 /* Mobile responsiveness */
 @media only screen and (max-width: 800px) {
-    * {
-    margin: 0;
-    padding: 0;
-    font-family: 'MyCustomFont';
-    color: #fff;
-}
+
     .inp_filtr, .inp_authr {
         color: black;
         padding: 10px;
@@ -236,7 +231,7 @@ th {
     .box,
     .box_ai,
     .results {
-        width: 95%;
+        width: 90%;
     }
 
     table {
