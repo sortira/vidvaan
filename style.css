@@ -1,3 +1,167 @@
+@font-face {
+    font-family: 'MyCustomFont';
+    src: url('FiraCodeNerdFont-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'MyCustomFont';
+    color: #fff;
+}
+
+body {
+    background-color: rgba(0, 0, 0, 0.7);
+    font-family: 'MyCustomFont';
+}
+
+.nav {
+    font-size: 1.2rem;
+    background-color: #000;
+    text-align: left;
+    padding: 5%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 5px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid white;
+}
+
+.header {
+    text-align: center;
+    position: relative;
+    width: 80%;
+    left: 10%;
+    height: 280px;
+}
+
+.highlight {
+    font-size: 20px;
+    padding: 5%;
+    padding-right: 10%;
+}
+
+.tldr {
+    all: unset;
+    position: relative;
+    
+    top: 20px;
+    margin-left: 28px;
+    background-color: black;
+    font-size: 50px;
+    color: rgb(255, 162, 0);
+    bottom: 20px;
+    left: -60px;
+}
+
+.img {
+    all: unset;
+    position: relative;
+    z-index: 1;
+    bottom: -50px;
+    left: -20px;
+    height: 180px;
+    width: 120px;
+    background-image: url("logo_.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.box,
+.box_ai,
+.results {
+    background-color: #1f1f1f;
+    text-align: center;
+    width: 90%;
+    margin: 20px auto;
+    padding: 15px;
+    border: 2px solid white;
+    border-radius: 20px;
+}
+
+.inp {
+    color: black;
+    height: 40px;
+    width: 250px;
+    margin-bottom: 10px;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+
+.filtr, .authr, .search, .download {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.inp_filtr, .inp_authr {
+    color: black;
+    padding: 10px;
+    height: 20px;
+    width: 200px;
+    margin-bottom: 10px;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+.btn {
+    all: unset;
+    display: inline-block;
+    text-align: center;
+    padding: 15px;
+    color: white;
+    background-color: transparent;
+    margin-top: 10px;
+}
+
+.btn_perm,
+.btn_perm_authr {
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    color: white;
+    background-color: #e8310a;
+    margin-bottom: 20px;
+}
+
+.btn:hover {
+    background-color: rgba(131, 119, 119, 0.6);
+}
+
+table {
+    width: 100%;
+}
+
+td {
+    border: 1px solid white !important;
+}
+
+td:nth-of-type(1n) {
+    text-align: left !important;
+}
+
+td:nth-of-type(1) a {
+    color: #fff !important;
+    position: relative !important;
+    text-decoration: none !important;
+}
+
+td:nth-of-type(2) {
+    font-weight: 700;
+}
+
+tr:nth-of-type(1) {
+    background-color: rgb(227, 94, 53);
+}
+
+th {
+    font-weight: 700 !important;
+    border: 2px solid white !important;
+}
+
+/* Mobile responsiveness */
 /* Mobile responsiveness */
 @media only screen and (max-width: 800px) {
     .inp_filtr, .inp_authr {
