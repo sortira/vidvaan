@@ -175,10 +175,11 @@ th {
     .nav {
         font-size: 1rem;
         padding: 10px;
+        width: 100%;
     }
 
     .header {
-        width: 100%;
+        width: 90%;
         height: 300px;
         left: 0;
     }
