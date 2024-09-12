@@ -162,7 +162,7 @@ th {
 }
 
 /* Mobile responsiveness */
-@media only screen and (max-width: 800px) {
+/* @media only screen and (max-width: 800px) {
     .inp_filtr, .inp_authr {
         color: black;
         padding: 10px;
@@ -234,4 +234,4 @@ th {
     table {
         font-size: 14px;
     }
-}
+} */
