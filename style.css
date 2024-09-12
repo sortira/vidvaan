@@ -163,6 +163,15 @@ th {
 
 /* Mobile responsiveness */
 @media only screen and (max-width: 800px) {
+    .inp_filtr, .inp_authr {
+        color: black;
+        padding: 10px;
+        height: 40px;
+        width: 200px;
+        margin-bottom: 10px;
+        border: 1px solid white;
+        border-radius: 10px;
+    }
     .nav {
         font-size: 1rem;
         padding: 10px;
