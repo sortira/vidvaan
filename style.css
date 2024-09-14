@@ -163,23 +163,28 @@ th {
 
 /* Mobile responsiveness */
 /* Mobile responsiveness */
+/* Mobile responsiveness */
 @media only screen and (max-width: 800px) {
     .inp_filtr, .inp_authr {
         color: black;
         padding: 10px;
         height: 20px;
-        width: 100%; /* Full width on smaller screens */
+        width: 180px; /* Full width on smaller screens */
         margin-bottom: 10px;
         border: 1px solid white;
         border-radius: 10px;
     }
     
     .nav {
+        width: 100%;
+        /* padding: 0; */
+        margin: 0;
         font-size: 1rem;
         padding: 10px;
     }
 
     .header {
+        margin: 0;
         width: 100%;
         height: auto; /* Adjust to auto for better flexibility */
         left: 0;
@@ -197,8 +202,10 @@ th {
     }
 
     .img {
-        margin-bottom: 20px;
-        height: 120px;
+        position: relative;
+        bottom: -25px;
+        margin-bottom: 30px;
+        height: 100px;
         width: 80px;
     }
 
@@ -213,7 +220,7 @@ th {
 
     .btn_perm,
     .btn_perm_authr {
-        width: 100%; /* Full width on smaller screens */
+        width: 180px; /* Full width on smaller screens */
         margin-right: 0;
         margin-bottom: 10px;
     }
@@ -222,17 +229,19 @@ th {
     .box_ai,
     .results {
         padding: 20px;
-        width: 100%; /* Full width for boxes on smaller screens */
+        width: 80%; /* Full width for boxes on smaller screens */
     }
 
     table {
         font-size: 12px; /* Smaller font size */
         display: block; /* Enable block display */
         overflow-x: auto; /* Enable horizontal scrolling */
-        white-space: nowrap; /* Prevent table data from wrapping */
+        /* white-space: nowrap; Prevent table data from wrapping */
     }
 
     th, td {
+        max-width: fit-content;
+
         padding: 8px; /* Adjust padding for mobile */
     }
 
