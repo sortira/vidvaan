@@ -12,16 +12,23 @@
 <body>
     <header>
         <div class="nav">
-            <h1>Vidvaan Publications</h1>
-            <button class="btn"><span class="highlight"><br></span>Home</button>
-            <button class="btn"><span class="highlight">‎ ‎ <br> About </button>
-            <button class="btn"> <span class="highlight">‎ ‎ <br><a href="https://github.com/sortira/vidvaan"
-                        style="text-decoration: none;">GitHub </a></button>
+            <div style="border-bottom: 1px solid orangered; width: 100%;">        
+                <button class="btn"><span style="margin-right: 25px; position: relative; bottom: 3px;"><a href="index.html" style="text-decoration: none;"></span>Home</a></button>
+                <button class="btn"><span style="margin-right: 25px; position: relative; bottom: 2px;"><a href="about.html" style="text-decoration: none;"></span>About </a></button>
+                <button class="btn"> <span style="margin-right: 25px; position: relative; bottom: 2px;"><a href="https://github.com/sortira/vidvaan" style="text-decoration: none;"></span>GitHub</a></button>
+            </div>
+            <!-- <img src="logo_.png" style="margin-top:-50px; height:  400px; width: 28%;position: relative; left: 36%; margin: 0;"> -->
+            <!-- <button class="btn" style="background: 'logo_.png'; height: 400px; width: 400px;" ;">aa</button> -->
+            <!-- <br> -->
+            <div class="header"> 
+                <button class="img"></button>
+                <button class="tldr">Vidvaan <br>Publications
+                </button>
+            </div>
         </div>
     </header>
     <div class="box">
         <div class="search">
-            <!-- <label for="topic" class="heading">Search</label> -->
             <input type="text" class="inp" id="topic" placeholder="Enter the search topic">
             <button class="btn_perm" onclick="searchPublications()"> Search</button>
         </div>
@@ -36,14 +43,16 @@
         </div>
         <div class="download">
             <!-- <input type="text" class="inp_authr" id="topic" placeholder="Author Name"> -->
-            <button class="btn_perm_authr" onclick="exportExcel()">󰇚 Download Excel</button>
+            <button class="btn_perm_authr" onclick="exportExcel()">󰇚 Download Excel</button><button class="btn_perm_authr" onclick="exportWord()">󰇚 Download Word</button>
         </div>
         <div class="ai_submit">
             <button class="btn_perm_authr" onclick="getAI()">AI Summarise</button>
         </div>
     </div>
-    <div id="ai-summary" class="box_ai"></div>
-    <!-- --------------------------------------- -->
+    <div id="ai-summary" class="box_ai">
+        AI Summary will be displayed here<br>Click on the AI Summarise button after the table concerning your search query is displayed to get a summary of the results
+
+    </div>
     <div id="publications" class="results">
         <!-- Results will be displayed here -->
     </div>
@@ -54,6 +63,7 @@
     </div>
 
     <script src="output-doc/excel.js"></script>
+    <script src="output-doc/word.js"></script>
     <script src="script.js"></script>
     <script src="filters/filter.js"></script>
     <script src="repos/arxiv.js"></script>
@@ -64,6 +74,8 @@
     <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
     <script lang="javascript" src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <script async src="./chat-widget.js"></script>
+    <script src=" https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.min.js "></script>
     <script async src="./chat-widget.js"></script>
 </body>
 

@@ -1,3 +1,5 @@
+![Vidvaan Logo and Image ](https://github.com/sortira/vidvaan/blob/main/logo_.png)
+
 # 📚 Vidvaan
 
 Welcome to **Vidvaan**! A comprehensive web application that consolidates academic publications from multiple sources like DBLP, ArXiv, OpenLibrary, and OpenAlex, all in one place. Easily search, view, and download results as an Excel file. 🚀
@@ -52,12 +54,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 💻 Author
 
-- **Aritro Shome** - [GitHub](https://github.com/sortira)
-- **SK Asif Tanvir**
-- **Sagnik**
-- **Prayas Sinha**
-- **Ahana Pal**
-- **Debjani Mondal**
+- **Aritro Shome** - [GitHub](https://github.com/sortira) || ***Contribution: Back-End***
+- **SK Asif Tanvir** - [GitHub](https://github.com/Asif-Tanvir-2006) || ***Contribution: Front-End and Hosting The Repository***
+- **Sagnik** || ***Contribution: UI/UX Design***
+- **Prayas Sinha** || ***Contribution: Exporting The Data To Excel and Word Files***
+- **Ahana Pal** || ***Contribution: Documentation***
+- **Debjani Mondal** || ***Contribution: Graphics, Logo And Roster Design***
 
 ## ⭐ Acknowledgments
 
@@ -65,7 +67,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
   - DBLP
   - ArXiv
-  - OpenLibrary
   - OpenAlex
 
 # Nerd Fonts
